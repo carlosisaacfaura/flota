@@ -1,0 +1,17 @@
+{
+  "name": "flota",
+  "owner": {
+    "name": "carlosisaacfaura"
+  },
+  "metadata": {
+    "description": "Marketplace privado de flota: subagentes con el mejor modelo por rol, recalibrados en cada lanzamiento de modelo."
+  },
+  "plugins": [
+    {
+      "name": "flota",
+      "source": "./plugins/flota",
+      "description": "Subagentes tipados (verificador, revisor, revisor crítico, auditores, investigador, mecánico, explorador) con el modelo y el esfuerzo que mejor rinden en cada rol, un hook que impide abaratarlos en silencio, la política de modelos y la auditoría integral de proyectos.",
+      "version": "1.0.0"
+    }
+  ]
+}

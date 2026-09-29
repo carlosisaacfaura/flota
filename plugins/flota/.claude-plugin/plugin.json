@@ -1,0 +1,15 @@
+{
+  "name": "flota",
+  "version": "1.0.0",
+  "description": "Subagentes con el mejor modelo y esfuerzo por rol, recalibrados con evidencia en cada lanzamiento de modelo, más la auditoría integral de proyectos.",
+  "author": {
+    "name": "carlosisaacfaura"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "subagentes",
+    "modelos",
+    "auditoria",
+    "revision-de-codigo"
+  ]
+}
