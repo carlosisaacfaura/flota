@@ -2,7 +2,7 @@
 # Copia del proyecto SIN secretos, SIN historial git y SIN datos locales, para que los agentes corran
 # tests o reproduzcan bugs sin tocar llaves reales, bases de datos reales ni servicios de producción.
 # Uso: copia-segura.sh <ruta_proyecto> <destino>
-# - Excluye: .git, dependencias y builds, .env* (salvo .env.example), sesiones, tokens, credenciales,
+# - Excluye: .git, dependencias y builds (incluye .venv.* rotos y .claude/worktrees/), .env* (salvo .env.example), sesiones, tokens, credenciales,
 #   llaves, bases de datos locales (*.db, *.sqlite*) y la carpeta data/.
 # - node_modules se ENLAZA (symlink) desde el original para no reinstalar nada. Aviso: vitest/vite
 #   pueden escribir su caché en node_modules/.vite del original (solo tiempos; git lo ignora).
@@ -15,7 +15,8 @@ DEST="$2"
 mkdir -p "$DEST"
 rsync -a \
   --include='.env.example' --include='.env.sample' --include='.env.template' \
-  --exclude='.git' --exclude='node_modules' --exclude='.next' --exclude='.nuxt' --exclude='.venv' --exclude='venv' \
+  --exclude='.git' --exclude='node_modules' --exclude='.next' --exclude='.nuxt' --exclude='.venv' --exclude='.venv.*' --exclude='venv' \
+  --exclude='/.claude/worktrees/' \
   --exclude='__pycache__' --exclude='.pytest_cache' --exclude='.mypy_cache' --exclude='dist' --exclude='build' \
   --exclude='.turbo' --exclude='.vercel' --exclude='.cache' --exclude='coverage' --exclude='.ua' \
   --exclude='.env' --exclude='.env.*' --exclude='*.session' --exclude='*.session-journal' --exclude='token.json' \

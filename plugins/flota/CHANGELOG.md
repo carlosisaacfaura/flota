@@ -3,6 +3,28 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.1.0 — 2026-10-01
+
+- **Agente nuevo `flota:implementador` (Opus 5.5 · xhigh)** para implementar con decisiones: una
+  tarea de un plan, una feature o una integración entre módulos.
+- **`flota:mecanico` (Sonnet 5.5) queda solo para cambios ya especificados al detalle.**
+- **Por qué:** al medir los registros reales, la implementación de tareas de planes estaba
+  llegando a `mecanico`. La prueba propia solo había mostrado que Sonnet basta para cambios
+  especificados, y la evidencia pública favorece a Opus 5.5 al implementar (Terminal-Bench 64 vs
+  43; GDPval 1820 vs 1725).
+- **Pendiente:** prueba a ciegas Opus contra Sonnet en tareas reales de planes. Si Sonnet empata,
+  el rol se revierte en una versión futura.
+- **La regla de delegación de la política cambió:** el "implementer" de skills como superpowers
+  ahora va a `flota:implementador`.
+- **Costo:** cada tarea de implementación cuesta más o menos el doble que con Sonnet.
+- **Auditoría integral:**
+  - En la profundidad completa, el mapa del proyecto lo hace Opus. Decide qué ve el revisor crítico
+    y qué no se reporta, así que es juicio, no barrido.
+  - Al deduplicar, un hallazgo alto ya no queda en severidad media por una variante de menor
+    severidad.
+  - Estimación de costo recalibrada con dos mediciones reales: el consumo fue ~0,4× lo estimado.
+  - La copia segura también excluye entornos virtuales rotos y los worktrees de `.claude`.
+
 ## 1.0.0 — 2026-09-29
 
 Primera versión.

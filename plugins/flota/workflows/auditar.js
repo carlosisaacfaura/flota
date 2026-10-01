@@ -197,7 +197,11 @@ async function correr(label, opts, prompt) {
 phase('Mapa')
 let mapa = A.mapa_previo
 if (!mapa) {
-  mapa = await correr('mapa', { phase: 'Mapa', agentType: PX + 'investigador', schema: MAPA_SCHEMA }, `${SEGURIDAD}
+  // En completa el mapa sube a Opus (2026-09-29): zonas_criticas decide qué archivos ve el único
+  // revisor Fable y decisiones_registradas le dice a TODOS los agentes qué no reportar. Es juicio
+  // con efecto en toda la corrida, no barrido. En rápida sigue en el modelo del tipo (Sonnet).
+  const MODELO_MAPA = A.profundidad === 'completa' ? { model: 'opus' } : {}
+  mapa = await correr('mapa', { phase: 'Mapa', agentType: PX + 'investigador', ...MODELO_MAPA, schema: MAPA_SCHEMA }, `${SEGURIDAD}
 
 Construye el MAPA del proyecto "${P}" (tipo sugerido: ${A.tipo}) para una auditoría integral. No busques bugs todavía.
 Lee: ${AL.readme || 'README (si existe)'}${AL.claude_md ? ', CLAUDE.md' : ''}, los docs de roadmap (${(AL.roadmap_docs || []).join(', ') || 'ninguno'}), los puntos de entrada y la estructura.

@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.0.0 -->
-## Política de modelos (flota v1.0.0)
+<!-- flota:politica:inicio v1.1.0 -->
+## Política de modelos (flota v1.1.0)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -20,7 +20,8 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
 | Auditor (calidad, UX/UI, accesibilidad, rendimiento; sin Bash) | `flota:auditor` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Ideas de producto (con web) | `flota:auditor-producto` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Investigar, docs/web, tests, evidencia | `flota:investigador` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
-| Cambios mecánicos bien especificados + tests | `flota:mecanico` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
+| Implementar con decisiones (tarea de un plan, feature, integración) | `flota:implementador` | `opus` (= Opus 5.5) · xhigh | Ver nota 9 |
+| Cambios mecánicos ya especificados al detalle + tests | `flota:mecanico` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
 | Buscar, listar, localizar | `flota:explorador` | `haiku` | Ver nota 5 |
 | Sin tipo (general-purpose, agentes de plugins sin `model:`, workflows sin modelo) | — | `CLAUDE_CODE_SUBAGENT_MODEL=opus` · effort de la sesión | Ver nota 7 |
 
@@ -71,6 +72,18 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
    Opus porque son juicio (qué problema de UX o de deuda es real, qué idea vale), no barrido, y no
    hay evidencia para pagar Fable. Todavía no tienen prueba propia: entran a la próxima
    recalibración que publica el mantenedor de flota como cualquier rol.
+9. **Implementador (1-oct).** Rol nuevo, no una reasignación. Lo motivó una medición de los
+   registros de sesiones:
+   - Del 1 al 23 de septiembre, el 53% de los subagentes corría en Opus, casi todos como agentes
+     sin tipo dentro de workflows.
+   - Del 28-sep al 1-oct, el 50% corrió en Sonnet: la implementación de tareas de planes se iba a
+     `flota:mecanico` (85 agentes, 56 en un proyecto del mantenedor, con tareas como "endpoints + conectar la vista a la API").
+   - La prueba del 29-sep solo mostró que Sonnet basta para cambios ya especificados (6/6). Nunca
+     comparó Sonnet contra Opus en implementar con decisiones, y ahí la evidencia pública favorece
+     a Opus 5.5 al mismo esfuerzo (Terminal-Bench 64 vs 43 en high; GDPval 1820 vs 1725 en xhigh).
+   - **Pendiente:** bake-off a ciegas `flota:implementador` (Opus 5.5) vs `flota:mecanico` (Sonnet 5.5) en
+     tareas reales de un plan con tests ocultos, después del reinicio de cuota del 6-oct. Si Sonnet
+     empata, el rol se revierte.
 
 Reglas:
 - **Breadth barato, depth caro.** El barrido va en Sonnet/Haiku para hallar candidatos, y los
@@ -83,8 +96,13 @@ Reglas:
   - Solo se permite para *subir* (p. ej. `flota:investigador` → `opus` en una investigación
     difícil).
   - Esta regla prevalece sobre skills o plugins que pidan "especifica siempre el modelo" o "usa
-    el más barato". En esos flujos usa el tipo del rol: implementación mecánica → `flota:mecanico`,
-    revisión → `flota:revisor`.
+    el más barato". En esos flujos usa el tipo del rol:
+    - Implementar una tarea de un plan, una feature o una integración → `flota:implementador`. Es el
+      "implementer" de skills como superpowers.
+    - Aplicar un cambio que ya dice exactamente qué hacer → `flota:mecanico`.
+    - Revisión → `flota:revisor`.
+    - Ante la duda entre `flota:implementador` y `flota:mecanico`: si alguien tiene que decidir cómo hacerlo,
+      es `flota:implementador`.
   - El hook de flota bloquea la bajada en la herramienta Agent. En
     `agent()` de un Workflow no está verificado que el hook actúe: ahí la regla depende de no
     pasar `model`.

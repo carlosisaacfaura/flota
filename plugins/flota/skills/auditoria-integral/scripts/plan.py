@@ -17,10 +17,13 @@ tipo, prof = sys.argv[2], sys.argv[3]
 forzar = set(filter(None, (arg("--forzar") or "").split(",")))
 apagar = set(filter(None, (arg("--apagar") or "").split(",")))
 
-# % de la cuota semanal por agente (referencia 2-sep, ajustada: Opus 5.5 ≈ 20% más barato que Opus 5).
-# Todos corren en xhigh desde el 29-sep: tomar como piso y corregir con historial-costos.md.
-COSTO = {"investigador": 0.35, "revisor": 0.7, "auditor": 0.7, "auditor-producto": 0.7,
-         "revisor-critico": 1.7, "verificador": 1.7}
+# % de la cuota semanal por agente, en xhigh. Recalibrado el 2026-09-30 con dos mediciones seguidas
+# (una auditoría rápida el 29-09: ~2 medido vs 4,8 estimado; una completa el 30-09: ~5 medido vs
+# 13,1): el real fue ~0,4× la referencia del 2-sep, así que todo se multiplicó por 0,4. El detalle
+# está en historial-costos.md.
+COSTO = {"investigador": 0.14, "revisor": 0.28, "auditor": 0.28, "auditor-producto": 0.28,
+         "revisor-critico": 0.68, "verificador": 0.68,
+         "investigador→opus (mapa)": 0.28}  # en completa el mapa sube a Opus (ver auditar.js)
 AGENTE = {"bugs": "revisor", "critico": "revisor-critico", "chequeo": "investigador", "tests": "investigador",
           "operacion": "investigador", "dependencias": "investigador", "ia": "investigador",
           "privacidad": "investigador", "calidad": "auditor", "ux": "auditor", "rendimiento": "auditor",
@@ -67,7 +70,10 @@ tope_ver = 1 if prof == "rapida" else 3
 def estimar(dims, tope):
     reparto = {}
     if "--mapa-previo" not in sys.argv:
-        reparto["investigador"] = 1
+        if prof == "completa":
+            reparto["investigador→opus (mapa)"] = 1
+        else:
+            reparto["investigador"] = 1
     for d, n in dims.items():
         reparto[AGENTE[d]] = reparto.get(AGENTE[d], 0) + n
     reparto["verificador"] = tope

@@ -26,8 +26,8 @@ import difflib, json, os, re, sys
 HOME = os.path.expanduser("~")
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PLUGIN = os.path.join(REPO, "plugins", "flota")
-AGENTES = ["verificador", "revisor", "revisor-critico", "auditor", "auditor-producto", "investigador",
-           "mecanico", "explorador"]
+AGENTES = ["verificador", "revisor", "revisor-critico", "auditor", "auditor-producto", "implementador",
+           "investigador", "mecanico", "explorador"]
 AUDITORIA = os.path.join(HOME, ".claude", "skills", "auditoria-integral")
 REVISAR = "--revisar" in sys.argv
 VERSION = sys.argv[sys.argv.index("--version") + 1] if "--version" in sys.argv else None

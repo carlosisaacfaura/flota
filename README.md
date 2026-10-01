@@ -14,7 +14,8 @@ vez que sale un modelo nuevo.
 | `flota:auditor` | Calidad, deuda técnica, UX/UI, accesibilidad, rendimiento (sin Bash) | Opus |
 | `flota:auditor-producto` | Ideas de producto ancladas al objetivo del proyecto (con web) | Opus |
 | `flota:investigador` | Investigar código, documentación o web; correr tests; traer evidencia | Sonnet |
-| `flota:mecanico` | Cambios mecánicos bien especificados más sus tests | Sonnet |
+| `flota:implementador` | Implementar con decisiones: una tarea de un plan, una feature, una integración | Opus |
+| `flota:mecanico` | Cambios ya especificados al detalle más sus tests | Sonnet |
 | `flota:explorador` | Buscar y localizar archivos, símbolos y callers | Haiku |
 
 Todos corren en esfuerzo **xhigh**, salvo el explorador. La tabla completa, con el porqué de cada

@@ -1,6 +1,6 @@
 ---
 name: mecanico
-description: Ejecución MECÁNICA de cambios bien especificados (Sonnet): aplicar un refactor idéntico en N archivos, agregar tests siguiendo un patrón dado, correr la suite y arreglar errores triviales de import o sintaxis, generar boilerplate. Necesita instrucciones exactas; no toma decisiones de diseño ni de producto.
+description: Ejecución MECÁNICA de cambios ya especificados al detalle (Sonnet): aplicar un refactor idéntico en N archivos, agregar tests siguiendo un patrón dado, aplicar una spec que dice exactamente qué cambiar, correr la suite y arreglar errores triviales de import o sintaxis, generar boilerplate. No toma decisiones de diseño ni de producto. Si la tarea es implementar una tarea de un plan, una feature o una integración entre módulos (hay que decidir cómo), usa flota:implementador.
 disallowedTools: Agent
 model: sonnet
 effort: xhigh

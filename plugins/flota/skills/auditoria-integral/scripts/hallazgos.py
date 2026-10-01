@@ -146,9 +146,14 @@ def consolidar():
         if dup:
             o = nuevos[dup]
             o["dimensiones"] = sorted(set(o["dimensiones"]) | {h.get("dimension", "?")})
+            sev_previa = o["severidad"]
             if SEV[h["severidad"]] > SEV[o["severidad"]] or h.get("estado_verificacion") in ("REPRODUCIDO", "CONFIRMADO"):
                 for k in ("severidad", "estado_verificacion", "escenario", "arreglo", "linea_vista"):
                     o[k] = h.get(k, o.get(k))
+            # un duplicado verificado de menor severidad no puede bajar la del grupo (29-09: un alto
+            # REPRODUCIDO quedó en medio porque una variante CONFIRMADO de otra dimensión lo pisó)
+            if SEV[sev_previa] > SEV[o["severidad"]]:
+                o["severidad"] = sev_previa
             o["zona_critica"] = o.get("zona_critica") or h.get("zona_critica")
             continue
         h["dimensiones"] = [h.get("dimension", "?")]
