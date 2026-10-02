@@ -42,8 +42,10 @@ puede hacer solo, y este skill las hace con el OK del usuario:
    - Los cambios se leen al abrir una sesión nueva.
    - Se recomienda Opus como modelo de la sesión principal (en el selector de modelo).
 
-**Desinstalar:** `python3 "$S" --desinstalar` quita el bloque y solo los ajustes que agregó flota,
-si siguen con el mismo valor. Después, el plugin se quita con `claude plugin uninstall flota@flota`.
+**Desinstalar:** `python3 "$S" --desinstalar` quita el bloque y solo los ajustes que agregó flota;
+los que flota había pisado con permiso vuelven a su valor previo. Después hay que quitar el plugin.
+Si aparece como `flota@synced`, se instaló desde la app: se quita en Customize → Plugins → flota →
+Remove. Si no, se instaló desde la terminal: `claude plugin uninstall flota@flota`.
 
 ## Requisitos que conviene confirmar
 

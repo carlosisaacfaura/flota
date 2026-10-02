@@ -3,6 +3,13 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.1.1 — 2026-10-02
+
+- **Instalación desde la app, sin terminal:** Customize → Plugins → Add → Add marketplace →
+  `carlosisaacfaura/flota`, conectando GitHub. Con Sync automatically las versiones nuevas llegan
+  solas. El README, la política y la desinstalación ahora cubren los dos caminos: app y terminal.
+- Sin cambios en la asignación de modelos.
+
 ## 1.1.0 — 2026-10-01
 
 - **Agente nuevo `flota:implementador` (Opus 5.5 · xhigh)** para implementar con decisiones: una

@@ -37,24 +37,32 @@ Además:
 
 - Plan **Max**. La política usa Fable en dos agentes y xhigh en todos; en Pro gastaría la semana
   muy rápido.
-- Claude Code actualizado. Terminal: `claude update`. La app de escritorio se actualiza sola.
-- `python3`, `git` y `rsync`, que vienen con macOS y sus herramientas de desarrollo.
-- `python3`: si `python3 --version` te pide instalar las herramientas de desarrollo de Apple,
-  acepta.
-- Acceso a este repo privado: acepta la invitación de GitHub y deja git autenticado con GitHub
-  (lo necesita también la actualización en segundo plano):
-
-  ```bash
-  gh auth login
-  ```
-
-  ```bash
-  gh auth setup-git
-  ```
+- La app de Claude para escritorio (se actualiza sola) o Claude Code en la terminal.
+- Una cuenta de GitHub con acceso a este repo privado: acepta la invitación que te llega por correo.
+- macOS con `python3`, `git` y `rsync`. Vienen con el sistema; si `python3 --version` te pide
+  instalar las herramientas de desarrollo de Apple, acepta.
 
 ## Instalar
 
-En la terminal:
+### Opción A (recomendada): desde la app, sin terminal
+
+1. En la app de Claude (o en claude.ai), ve a **Customize → Plugins → Add → Add marketplace**.
+2. Escribe `carlosisaacfaura/flota`.
+3. Como el repo es privado, el diálogo te pide **Connect GitHub**. Conecta tu cuenta de GitHub, la
+   misma que recibió la invitación. Si además pide instalar la **Claude GitHub App** en el repo,
+   avísale al mantenedor: eso lo hace el dueño del repo una sola vez.
+4. En la lista de plugins de ese marketplace, agrega **flota**.
+5. En el marketplace, activa **Sync automatically**: así cada versión nueva te llega sola.
+6. Abre una sesión en la pestaña **Code**. La primera vez puede que tengas que escribir
+   `/reload-plugins` o abrir otra sesión para que cargue. Después escribe `/flota:instalar-politica`:
+   te muestra qué va a agregar a tu `~/.claude/CLAUDE.md` y `settings.json` y lo aplica con tu OK.
+   Abre una sesión nueva para que tome efecto.
+
+Instalado así, el plugin queda en tu cuenta de Claude y aparece en Claude Code como `flota@synced`.
+
+### Opción B: desde la terminal
+
+Necesitas git autenticado con GitHub (`gh auth login` y después `gh auth setup-git`). Luego:
 
 ```bash
 claude plugin marketplace add carlosisaacfaura/flota
@@ -64,26 +72,28 @@ claude plugin marketplace add carlosisaacfaura/flota
 claude plugin install flota@flota
 ```
 
-Después abre una sesión de Claude Code (terminal o app) y escribe `/flota:instalar-politica`.
-Te muestra qué va a agregar a tu `~/.claude/CLAUDE.md` y `settings.json`, y lo aplica con tu OK.
-Abre una sesión nueva para que tome efecto.
+Y en una sesión: `/flota:instalar-politica`.
 
 ## Actualizar
 
-Cuando sale un modelo nuevo, el mantenedor recalibra y publica una versión. Los marketplaces de
-terceros **no se autoactualizan por defecto**. Puedes activarlo en `/plugin` → Marketplaces →
-flota → Enable auto-update, o actualizar a mano:
+Cuando sale un modelo nuevo, el mantenedor recalibra y publica una versión.
 
-```bash
-claude plugin marketplace update flota
-```
+- **Si instalaste desde la app:** llega sola si activaste **Sync automatically**. Si no, ve a
+  Customize → Plugins y elige **Check for updates**.
+- **Si instalaste desde la terminal:** los marketplaces de terceros no se actualizan solos por
+  defecto. Actívalo en `/plugin` → Marketplaces → flota → Enable auto-update, o hazlo a mano:
 
-```bash
-claude plugin update flota@flota
-```
+  ```bash
+  claude plugin marketplace update flota
+  ```
 
-Reinicia Claude Code (o abre una sesión nueva): el aviso de inicio te va a pedir correr
-`/flota:instalar-politica` para actualizar el bloque de la política. Qué cambió en cada versión: `plugins/flota/CHANGELOG.md`.
+  ```bash
+  claude plugin update flota@flota
+  ```
+
+En los dos casos, al abrir la sesión siguiente el aviso de inicio te pide correr
+`/flota:instalar-politica` para actualizar el bloque de la política. Qué cambió en cada versión:
+`plugins/flota/CHANGELOG.md`.
 
 ## Usar
 
@@ -98,11 +108,14 @@ Reinicia Claude Code (o abre una sesión nueva): el aviso de inicio te va a pedi
 ## Desinstalar
 
 En una sesión, `/flota:instalar-politica` y pide desinstalar: quita el bloque de la política y
-solo los ajustes que agregó flota. Después:
+solo los ajustes que agregó flota. Después quita el plugin:
 
-```bash
-claude plugin uninstall flota@flota
-```
+- **Si lo instalaste desde la app:** Customize → Plugins → flota → menú → **Remove**.
+- **Si lo instalaste desde la terminal:**
+
+  ```bash
+  claude plugin uninstall flota@flota
+  ```
 
 ## Para el mantenedor
 
@@ -121,6 +134,10 @@ La fuente de verdad es la configuración personal del mantenedor. Tras cada reca
    ```bash
    claude plugin validate .
    ```
+
+Para la instalación desde la app con el repo privado, la Claude GitHub App necesita acceso al
+repo. Si un amigo ve "Install the Claude GitHub App", instálala tú como dueño (GitHub → Settings →
+Applications, o el botón del propio diálogo) y dale acceso al repo `flota`.
 
 El `SKILL.md` de la auditoría del plugin se mantiene a mano, porque el del mantenedor tiene
 integraciones personales. Si cambia el del mantenedor, porta el cambio.

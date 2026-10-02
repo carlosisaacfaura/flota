@@ -211,7 +211,8 @@ def main():
         print(f"Desinstalado. Bloque de la política: {'quitado' if actual else 'no estaba'} · ajustes quitados: "
               f"{', '.join(quitadas) or '-'} · restaurados a tu valor previo: {', '.join(restauradas) or '-'}"
               + (f" · dejados porque los cambiaste tú: {', '.join(dejadas)}" if dejadas else "")
-              + f". Respaldos: {r1 or '-'} · {r2 or '-'}. Para quitar el plugin: claude plugin uninstall flota@flota")
+              + f". Respaldos: {r1 or '-'} · {r2 or '-'}. Falta quitar el plugin: desde la app, Customize → Plugins → flota → Remove; "
+              "desde la terminal, claude plugin uninstall flota@flota")
         return
 
     plan = plan_settings(s, ajustes, registro, forzar)

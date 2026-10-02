@@ -1,12 +1,13 @@
-<!-- flota:politica:inicio v1.1.0 -->
-## Política de modelos (flota v1.1.0)
+<!-- flota:politica:inicio v1.1.1 -->
+## Política de modelos (flota v1.1.1)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
-versión nueva. Para actualizar: `claude plugin marketplace update flota`, luego
-`claude plugin update flota@flota` y en una sesión `/flota:instalar-politica`. No edites este
-bloque: se reemplaza completo en cada actualización. Tus propias instrucciones van fuera de los
-marcadores.
+versión nueva. Si instalaste flota desde la app, la versión nueva llega sola con Sync
+automatically (o con Check for updates en Customize → Plugins). Si la instalaste desde la
+terminal: `claude plugin marketplace update flota` y `claude plugin update flota@flota`. En los
+dos casos, después corre `/flota:instalar-politica`. No edites este bloque: se reemplaza completo
+en cada actualización. Tus propias instrucciones van fuera de los marcadores.
 
 **Prioridad del usuario: el MEJOR resultado, no el mayor ahorro, sin dejar la semana sin cuota
 en un día.** El juicio se concentra donde rinde y el barrido va barato.
