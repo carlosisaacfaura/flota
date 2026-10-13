@@ -3,6 +3,14 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.2.0 — 2026-10-13
+
+- **flota pasa a ser público**, con licencia MIT. Cualquiera puede instalarlo: ya no hace falta
+  invitación ni conectar GitHub.
+- El plugin vive ahora en la raíz del repositorio.
+- README nuevo, con la sección "Qué ejecuta y qué modifica en tu equipo", y política de privacidad.
+- Sin cambios en la asignación de modelos.
+
 ## 1.1.1 — 2026-10-02
 
 - **Instalación desde la app, sin terminal:** Customize → Plugins → Add → Add marketplace →

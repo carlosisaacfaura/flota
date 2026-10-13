@@ -1,17 +1,18 @@
 {
   "name": "flota",
   "owner": {
-    "name": "carlosisaacfaura"
+    "name": "Carlos Isaac",
+    "url": "https://github.com/carlosisaacfaura"
   },
   "metadata": {
-    "description": "Marketplace privado de flota: subagentes con el mejor modelo por rol, recalibrados en cada lanzamiento de modelo."
+    "description": "flota: subagentes con el mejor modelo por rol, recalibrados con evidencia en cada lanzamiento de modelo."
   },
   "plugins": [
     {
       "name": "flota",
-      "source": "./plugins/flota",
-      "description": "Subagentes tipados (verificador, revisor, revisor crítico, auditores, investigador, mecánico, explorador) con el modelo y el esfuerzo que mejor rinden en cada rol, un hook que impide abaratarlos en silencio, la política de modelos y la auditoría integral de proyectos.",
-      "version": "1.1.1"
+      "source": "./",
+      "description": "Subagentes tipados (verificador, revisor, revisor crítico, auditores, implementador, investigador, mecánico, explorador) con el modelo y el esfuerzo que mejor rinden en cada rol, un hook que impide abaratarlos en silencio, la política de modelos y la auditoría integral de proyectos.",
+      "version": "1.2.0"
     }
   ]
 }

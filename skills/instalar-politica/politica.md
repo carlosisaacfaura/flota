@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.1.1 -->
-## Política de modelos (flota v1.1.1)
+<!-- flota:politica:inicio v1.2.0 -->
+## Política de modelos (flota v1.2.0)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
