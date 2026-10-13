@@ -107,11 +107,27 @@ Todo es código legible que puedes revisar en este repo. Nada se envía al autor
 - **`/flota:auditoria-integral`:**
   - Lee el proyecto que le indiques. Nunca abre `.env`, llaves ni tokens.
   - Crea una copia temporal sin secretos ni bases de datos, y corre ahí los tests y las
-    herramientas que ya tengas instaladas (`npm audit`, `pip-audit`). `npm audit` envía la lista
-    de tus dependencias al registro de npm, como siempre que se usa.
-  - Los agentes pueden consultar documentación oficial en la web.
+    herramientas que ya tengas instaladas.
+  - Lee el historial de git para saber qué modelo escribió cada línea. Ese historial incluye
+    nombres y correos de quienes hicieron commits; flota no los guarda ni los envía. También puede
+    encontrar datos personales que estén en tu código, y tampoco los guarda.
   - Escribe el informe en `docs/auditorias/` de tu proyecto y un registro en `~/.claude/flota/`.
     No hace commit, push ni deploy.
+
+### Servicios externos que contacta
+
+flota no tiene servidor ni conectores. Lo único que sale de tu equipo ocurre durante una
+auditoría, y va a servicios de terceros, nunca al autor:
+
+| Qué | A dónde | Qué se envía |
+|---|---|---|
+| `npm audit` y `npm outdated` | Registro de npm | Nombres y versiones de las dependencias de tu proyecto |
+| `pip-audit`, si lo tienes instalado | PyPI y la base de avisos de Python | Nombres y versiones de tus dependencias |
+| `osv-scanner`, si lo tienes instalado | OSV (osv.dev) | Nombres y versiones de tus dependencias |
+| Búsqueda y lectura web de Claude | Sitios de documentación oficial | Consultas sobre modelos, precios y frameworks |
+| Búsqueda web de Claude, solo en la auditoría completa y si la aceptas | Sitios públicos | Consultas para encontrar productos comparables al tuyo |
+
+flota no instala ninguna de esas herramientas: solo usa las que ya tienes.
 
 ## Actualizar
 

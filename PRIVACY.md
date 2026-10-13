@@ -15,10 +15,15 @@ tiene servidor propio y su autor no recibe ninguna información de quienes lo in
   el proyecto que le pidas auditar, y sus propios registros en `~/.claude/flota/`.
 - **Secretos.** La auditoría no abre archivos `.env`, llaves, tokens ni credenciales, y nunca
   escribe sus valores en un informe.
-- **Servicios de terceros que tú ya usas.** Si la auditoría corre `npm audit` u otra herramienta
-  instalada en tu equipo, esa herramienta contacta a su propio servicio (por ejemplo, el registro
-  de npm) como lo hace siempre. Si un agente consulta documentación en la web, lo hace con las
-  herramientas de búsqueda de tu Claude.
+- **Datos personales.** La auditoría lee el historial de git de tu proyecto, que incluye nombres
+  y correos de quienes hicieron commits, y puede encontrar datos personales que estén en tu
+  código. flota no los guarda ni los envía a ninguna parte.
+- **Servicios de terceros.** Durante una auditoría, las herramientas que ya tienes instaladas
+  contactan a su propio servicio con los nombres y versiones de tus dependencias: `npm audit` y
+  `npm outdated` al registro de npm, `pip-audit` a PyPI y `osv-scanner` a OSV. Los agentes usan
+  la búsqueda web de tu Claude para consultar documentación oficial y, solo en la auditoría
+  completa y si la aceptas, para buscar productos comparables. La lista completa está en la
+  sección "Servicios externos que contacta" del [README](README.md).
 
 ## Contacto
 
@@ -30,4 +35,5 @@ https://github.com/carlosisaacfaura/flota/issues
 **English summary:** flota collects, stores and transmits no personal or usage data. It has no
 telemetry and no server; everything runs locally inside your own Claude Code session under your
 own Claude account. See the README section "Qué ejecuta y qué modifica en tu equipo" for exactly
-what it reads and writes.
+what it reads and writes, and "Servicios externos que contacta" for the third-party services
+contacted during an audit (npm registry, PyPI, OSV, web search).
