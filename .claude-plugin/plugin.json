@@ -8,6 +8,7 @@
   },
   "homepage": "https://github.com/carlosisaacfaura/flota",
   "repository": "https://github.com/carlosisaacfaura/flota",
+  "privacyPolicyUrl": "https://github.com/carlosisaacfaura/flota/blob/main/PRIVACY.md",
   "license": "MIT",
   "keywords": [
     "subagentes",

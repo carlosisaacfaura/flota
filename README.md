@@ -171,6 +171,7 @@ pendiente en el CHANGELOG en vez de asumirse.
 ## Soporte, privacidad y licencia
 
 - **Problemas o ideas:** abre un [issue](https://github.com/carlosisaacfaura/flota/issues).
-- **Privacidad:** flota no recopila ni envía datos. Detalle en [PRIVACY.md](PRIVACY.md).
+- **Privacidad:** flota no recopila ni envía datos. Detalle en la
+  [política de privacidad (Privacy Policy)](https://github.com/carlosisaacfaura/flota/blob/main/PRIVACY.md).
 - **Licencia:** [MIT](LICENSE). Puedes usarlo, copiarlo y modificarlo conservando la autoría. Se
   entrega sin garantía.
