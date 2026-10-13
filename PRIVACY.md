@@ -13,8 +13,11 @@ tiene servidor propio y su autor no recibe ninguna información de quienes lo in
 - **Qué lee y qué escribe** está detallado en la sección "Qué ejecuta y qué modifica en tu equipo"
   del [README](README.md): tu `CLAUDE.md` y `settings.json` de Claude (solo con tu aprobación),
   el proyecto que le pidas auditar, y sus propios registros en `~/.claude/flota/`.
-- **Secretos.** La auditoría no abre archivos `.env`, llaves, tokens ni credenciales, y nunca
-  escribe sus valores en un informe.
+- **Secretos y credenciales.** flota no usa ni envía ninguna credencial tuya. La auditoría busca
+  por nombre los archivos de secretos (`.env`, llaves, tokens) solo para informarte su ruta; no
+  abre su contenido ni lo escribe en un informe. Al instalar la política se guarda en tu equipo
+  una copia de respaldo de tu `CLAUDE.md` y tu `settings.json`; si ese archivo tiene claves, la
+  copia local también las tiene, y no sale de tu equipo.
 - **Datos personales.** La auditoría lee el historial de git de tu proyecto, que incluye nombres
   y correos de quienes hicieron commits, y puede encontrar datos personales que estén en tu
   código. flota no los guarda ni los envía a ninguna parte.

@@ -102,10 +102,15 @@ Todo es código legible que puedes revisar en este repo. Nada se envía al autor
   - Agrega un bloque marcado en `~/.claude/CLAUDE.md`. Lo que está fuera del bloque no se toca.
   - Agrega tres ajustes en `~/.claude/settings.json`: `env.CLAUDE_CODE_SUBAGENT_MODEL`,
     `modelSettings` y `fallbackModel`. Si ya tienes otro valor, no lo pisa sin preguntarte.
-  - Deja respaldos en `~/.claude/flota/respaldos/` y anota qué agregó, para poder deshacerlo.
+  - Antes de cambiar algo, deja una copia completa de esos dos archivos en
+    `~/.claude/flota/respaldos/`, dentro de tu equipo, y anota qué agregó para poder deshacerlo.
+    Si tu `settings.json` tiene claves, la copia local también las tiene; no se envía a ningún lado.
   - No cambia permisos ni reglas de seguridad de Claude.
 - **`/flota:auditoria-integral`:**
   - Lee el proyecto que le indiques. Nunca abre `.env`, llaves ni tokens.
+  - Busca **por nombre** los archivos de secretos (`.env`, `id_rsa`, `token.json` y similares)
+    para avisarte si están versionados o sin `.gitignore`. Anota solo la ruta; nunca lee ni copia
+    su contenido, y los excluye de la copia temporal.
   - Crea una copia temporal sin secretos ni bases de datos, y corre ahí los tests y las
     herramientas que ya tengas instaladas.
   - Lee el historial de git para saber qué modelo escribió cada línea. Ese historial incluye
