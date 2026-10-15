@@ -1,6 +1,6 @@
 {
   "name": "flota",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Equipo de subagentes para Claude Code: cada rol en el modelo y esfuerzo que mejor rinden, recalibrado con evidencia en cada lanzamiento de modelo, más una auditoría integral de proyectos.",
   "author": {
     "name": "Carlos Isaac",

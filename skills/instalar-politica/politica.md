@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.2.0 -->
-## Política de modelos (flota v1.2.0)
+<!-- flota:politica:inicio v1.2.1 -->
+## Política de modelos (flota v1.2.1)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -23,7 +23,7 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
 | Investigar, docs/web, tests, evidencia | `flota:investigador` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
 | Implementar con decisiones (tarea de un plan, feature, integración) | `flota:implementador` | `opus` (= Opus 5.5) · xhigh | Ver nota 9 |
 | Cambios mecánicos ya especificados al detalle + tests | `flota:mecanico` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
-| Buscar, listar, localizar | `flota:explorador` | `haiku` | Ver nota 5 |
+| Buscar, listar, localizar | `flota:explorador` | `haiku` (= Haiku 5.5) · hereda xhigh | Ver nota 5 |
 | Sin tipo (general-purpose, agentes de plugins sin `model:`, workflows sin modelo) | — | `CLAUDE_CODE_SUBAGENT_MODEL=opus` · effort de la sesión | Ver nota 7 |
 
 1. **Sesión principal.** Opus 5.5 supera a Fable 5.1 a igual esfuerzo en 6 fuentes
@@ -54,9 +54,17 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
    - `flota:investigador` y `flota:mecanico` pasaron solos, y tienen el effort fijado en el frontmatter.
      Eso importa porque en Claude Code Sonnet 5.5 arranca en medium por defecto, donde rinde
      bastante menos.
-   - Explorador sigue en Haiku 4.5: no hay comparación para localizar código y Sonnet 5.5
-     cuesta el doble.
-   - Recalibrar cuando salga Haiku 5.5.
+   - **Explorador en Haiku 5.5** (15-oct). Salió el 7-oct y el alias `haiku` lo resuelve desde la
+     CLI 2.1.300. Es un salto grande sobre Haiku 4.5 (Epoch ECI 159 vs 142) y cuesta 10 veces
+     menos, salvo con prompts de más de 100K tokens, que pagan 5 veces más por token.
+   - **Effort del explorador: hereda xhigh, por decisión del mantenedor de flota.** Haiku 5.5 es el primer
+     Haiku con effort y su default es medium. Anthropic y los dos jueces recomendaban fijar
+     medium; el mantenedor prefirió xhigh porque igual gasta muy poco.
+   - **Haiku 5.5 no reemplaza a Sonnet** en `flota:investigador` ni en `flota:mecanico`:
+     - Su ficha oficial dice que alucina más que Sonnet y Opus, y el entregable del
+       investigador es evidencia fiel.
+     - En migraciones y refactors queda muy abajo (Vals Code Migration 44,6 vs 69,8, fuera del
+       margen).
 6. **Sonnet 5.5 no reemplaza a Opus 5.5.** Solo empata con Opus 5.5 en `max`, y ahí gasta más
    tokens que Opus. Al mismo esfuerzo, Opus 5.5 gana con claridad:
    - En high: GDPval 1692 vs 1517 y Terminal-Bench 64,2 vs 43,0.
@@ -165,5 +173,6 @@ Reglas:
   resolver `opus` a modelos distintos. Opus 5.5 exige la CLI 2.1.280 o posterior.
 
 Precios por millón de tokens (in/out): Fable 5.1 $10/$50 · Opus 5.5 $4/$20 · Opus 5 $5/$25 ·
-Sonnet 5.5 $2/$10 (igual que Sonnet 5) · Haiku 4.5 $1/$5.
+Sonnet 5.5 $2/$10 (igual que Sonnet 5) · Haiku 5.5 $0,10/$0,50 (con prompt ≤100K tokens; sobre
+100K, 5 veces más) · Haiku 4.5 $1/$5.
 <!-- flota:politica:fin -->

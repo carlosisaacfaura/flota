@@ -3,6 +3,17 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.2.1 — 2026-10-15
+
+- **Recalibración tras Haiku 5.5** (salió el 7-oct): sin cambios de asignación.
+  - `flota:explorador` ya corre en Haiku 5.5 por el alias `haiku`. Es un salto grande sobre
+    Haiku 4.5 y cuesta 10 veces menos, salvo con prompts de más de 100K tokens.
+  - Haiku 5.5 no reemplaza a Sonnet en `flota:investigador` ni en `flota:mecanico`: alucina más
+    según su ficha oficial y queda muy abajo en refactors.
+  - `flota:verificador` y `flota:revisor-critico` siguen en Fable hasta una prueba a ciegas
+    contra Opus.
+- La política suma Haiku 5.5 a la tabla de precios.
+
 ## 1.2.0 — 2026-10-13
 
 - **flota pasa a ser público**, con licencia MIT. Cualquiera puede instalarlo: ya no hace falta
