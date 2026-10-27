@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.2.1 -->
-## Política de modelos (flota v1.2.1)
+<!-- flota:politica:inicio v1.3.0 -->
+## Política de modelos (flota v1.3.0)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -17,11 +17,11 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
 | Sesión principal | selector de modelo de la app | **Opus 5.5 · xhigh** | Ver nota 1 |
 | Verificador / juez | `flota:verificador` | `fable` · xhigh | Ver nota 2 |
 | Revisor (buscar bugs) | `flota:revisor` | `opus` (= Opus 5.5) · xhigh | Ver nota 3 |
-| Revisor crítico (dinero, seguridad, reglas de Meta) | `flota:revisor-critico` | `fable` · xhigh | Ver nota 4 |
+| Revisor crítico (dinero, seguridad, reglas de Meta) | `flota:revisor-critico` | `opus` (= Opus 5.5) · xhigh | Ver nota 4 |
 | Auditor (calidad, UX/UI, accesibilidad, rendimiento; sin Bash) | `flota:auditor` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Ideas de producto (con web) | `flota:auditor-producto` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Investigar, docs/web, tests, evidencia | `flota:investigador` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
-| Implementar con decisiones (tarea de un plan, feature, integración) | `flota:implementador` | `opus` (= Opus 5.5) · xhigh | Ver nota 9 |
+| Implementar con decisiones (tarea de un plan, feature, integración) | `flota:implementador` | `sonnet` (= Sonnet 5.5) · xhigh; `model: opus` en tareas largas o de dinero | Ver nota 9 |
 | Cambios mecánicos ya especificados al detalle + tests | `flota:mecanico` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
 | Buscar, listar, localizar | `flota:explorador` | `haiku` (= Haiku 5.5) · hereda xhigh | Ver nota 5 |
 | Sin tipo (general-purpose, agentes de plugins sin `model:`, workflows sin modelo) | — | `CLAUDE_CODE_SUBAGENT_MODEL=opus` · effort de la sesión | Ver nota 7 |
@@ -40,14 +40,19 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
    - **Cuándo pasar a Fable 5.1 (high):** en sesiones autónomas de horas, en investigación
      profunda de muchos pasos, o cuando xhigh falla dos veces con el mismo problema (escalera
      oficial).
-2. **Verificador.** No hay comparación directa Opus 5.5 vs Fable 5.1 para refutar hallazgos, y
-   los jueces se dividieron, cada uno en contra de su propia familia. Se mantiene Fable hasta un
-   bake-off. Además da diversidad frente al revisor Opus.
+2. **Verificador: Fable.** En la prueba a ciegas del 27-oct (un SaaS propio del mantenedor, 12 hallazgos con 5
+   falsos, 2 rondas) Fable y Opus acertaron 12/12 en todas las corridas; Opus costó ~45% menos.
+   Con calidad empatada se mantiene Fable por diseño: es el único rol de otra familia que revisa
+   el trabajo de los revisores Opus, y pesa ~5% del gasto. Si la cuota aprieta, es el primer
+   candidato a pasar a Opus.
 3. **Revisor.** Opus 5.5 es una mejora clara sobre Opus 5 (+bugs detectados, 20% más barato) y
    no hay evidencia para pagar Fable.
-4. **Revisor crítico.** No hay comparación directa y el riesgo es asimétrico: un bug de dinero
-   que se escapa cuesta más que la cuota. Se mantiene Fable hasta un bake-off. Desde el 24-sep
-   es un agente propio, con su effort independiente del revisor.
+4. **Revisor crítico: Opus desde el 27-oct.** Prueba a ciegas en el código de dinero y permisos
+   de un SaaS propio del mantenedor, 7 bugs plantados (5 entre archivos), 2 rondas: Opus encontró 13/14 y Fable
+   9/14, ninguno reportó los hallazgos falsos plantados, y Opus costó ~27% menos ($3,6 vs $4,9 por
+   corrida). La diferencia no es significativa con n=2 (Fisher p≈0,17), pero fue en la misma
+   dirección en las dos rondas y Opus es más barato: con calidad al menos igual gana el más
+   barato. Es un agente propio desde el 24-sep, con effort independiente del revisor.
 5. **Roles de volumen.** Desde la CLI 2.1.284 el alias `sonnet` es **Sonnet 5.5** (28-sep):
    mismo precio que Sonnet 5 y claramente mejor (GDPval max 1844 vs 1449, FrontierCode en high
    49,4 vs 39,4).
@@ -90,9 +95,21 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
    - La prueba del 29-sep solo mostró que Sonnet basta para cambios ya especificados (6/6). Nunca
      comparó Sonnet contra Opus en implementar con decisiones, y ahí la evidencia pública favorece
      a Opus 5.5 al mismo esfuerzo (Terminal-Bench 64 vs 43 en high; GDPval 1820 vs 1725 en xhigh).
-   - **Pendiente:** bake-off a ciegas `flota:implementador` (Opus 5.5) vs `flota:mecanico` (Sonnet 5.5) en
-     tareas reales de un plan con tests ocultos, después del reinicio de cuota del 6-oct. Si Sonnet
-     empata, el rol se revierte.
+   - **Bake-off del 27-oct: el `flota:implementador` pasa a Sonnet 5.5 xhigh** (se mantiene el rol y su
+     método; solo cambia el modelo).
+     - 5 tareas reales con decisiones en un SaaS propio del mantenedor (dinero, zona horaria de Chile, permisos),
+       tests ocultos y un juez a ciegas (Fable) por tarea. Tres brazos: Opus xhigh, Opus high y
+       Sonnet xhigh.
+     - Los 15 pasaron los tests ocultos (44/44 casos por brazo) sin romper la suite.
+     - Juez: Sonnet xhigh nota 8,5 (mejor en 3 de 5), Opus xhigh 8,3 (mejor en 2), Opus high 7,3
+       (último en las 5, con más bugs y 2 requisitos incumplidos). En ninguna tarea la diferencia
+       entre la mejor y la peor habría cambiado algo en producción.
+     - Costo en la prueba: Sonnet −48% y Opus high −46% frente a Opus xhigh. En tareas reales,
+       largas, el ahorro de Sonnet es menor (~20% del costo del rol), porque releer contexto cuesta
+       lo mismo en ambos modelos.
+     - **Límite de la evidencia:** las tareas duraron 5–9 min y las reales ~30 min. Por eso, en
+       tareas largas (más de ~1 h estimada o que cruzan muchos módulos) o de dinero y seguridad,
+       pasa `model: opus` al `flota:implementador`. Subir el modelo está permitido.
 
 Reglas:
 - **Breadth barato, depth caro.** El barrido va en Sonnet/Haiku para hallar candidatos, y los
@@ -120,9 +137,11 @@ Reglas:
 - **Effort por agente** va en el frontmatter (`effort:`). Sin ese campo, el subagente hereda el
   de la sesión (verificado el 24-sep). Todos los tipados están en xhigh, verificado con
   subagentes reales el 29-sep.
-  - La herramienta Agent **no acepta effort por llamada**; solo cambia el modelo.
-  - Para un caso que necesite más esfuerzo, usa otro agente con otro `effort:`, o sube la sesión
-    con `/effort`.
+  - Desde la CLI 2.1.292 la herramienta Agent acepta `effort` por llamada, y ese valor **le gana
+    al frontmatter**. Úsalo solo para *subir* (p. ej. `max` puntual), nunca para bajar el de un
+    agente tipado. El hook no lo bloquea: la regla depende de no pasarlo.
+  - Para un caso que necesite más esfuerzo, pasa un `effort` más alto en esa llamada, o sube la
+    sesión con `/effort`.
 - **Esfuerzo: xhigh en todos los agentes, max solo puntual** (decidido el 29-sep):
   - **xhigh** capta casi toda la mejora que existe y es el nivel más alto sin ningún problema
     documentado. En ningún benchmark de las tareas de los agentes salió peor que high con
@@ -147,6 +166,14 @@ Reglas:
     - Costo contra high: xhigh 1,2–2,2×, max 5–6,5×.
     - **xhigh se confirma como el punto óptimo.** Max no mostró ganancia medible y cuesta 3–4×
       xhigh: úsalo solo en auditorías críticas puntuales.
+  - **Medido de nuevo el 27-oct (high vs xhigh): bajar a high empeora.**
+    - Implementador (Opus): high quedó último en las 5 tareas, con más bugs y 2 requisitos
+      incumplidos.
+    - Investigador (Sonnet, 8 preguntas difíciles): 7 empates, y xhigh ganó en la otra porque
+      encontró un bug real de dinero que high no vio. High costó ~48% menos.
+    - Sesión principal: el pensamiento es solo ~11% de su costo, así que bajar el effort casi no
+      ahorra. Su costo es releer y reescribir contexto (ver "Contexto y pausas").
+    - Conclusión: **no se baja el effort de ningún rol.**
   - Cambia el effort en pausas: cambiarlo en medio de una conversación invalida el caché.
   - **Nunca fijes `CLAUDE_CODE_EFFORT_LEVEL`:** le gana al effort de todos los agentes.
 - **Ultracode** = workflows automáticos para cada tarea que Claude juzgue sustancial.
@@ -166,6 +193,21 @@ Reglas:
   - Referencia de consumo (dato propio del 2-sep): ≈1,7% por agente Fable pesado, ≈0,85% por
     Opus 5 y ≈0,35% por Sonnet. Opus 5.5 cuesta ~20% menos por token que Opus 5.
   - En Max, Fable tiene un tope del 50% de la cuota semanal.
+  - **Contexto y pausas** (medido el 27-oct en los registros: releer contexto es la mayor parte
+    del costo):
+    - Volver a una sesión grande después de más de 1 h reescribe el caché entero. Entre el 13 y el
+      27-oct eso fue ~1/3 del gasto de las sesiones principales. Si el usuario dice que se va por
+      un rato o cierra una fase, y la sesión pasa de ~300k tokens (en la app, revísalo con
+      `get_usage`), recomiéndale `/compact` *antes* de irse: con el caché activo cuesta ~5% de
+      esa reescritura. Tú no puedes compactar; solo recomendarlo.
+    - Una sesión por fase, no por proyecto: el 72% del gasto de las sesiones principales ocurrió
+      con más de 400k tokens de contexto. Al cambiar de fase, propone abrir una sesión nueva con
+      una nota de traspaso.
+  - **`flota:implementador` y `flota:mecanico` excluyen herramientas que nunca usaron** en 136 corridas
+    (artefactos, Vercel, Higgsfield, trading, correo, control de la app, etc.). Arrancaban con
+    ~109k tokens de contexto. Es una lista de exclusión (`disallowedTools`), no de permitidos,
+    para que las herramientas nuevas de Anthropic les sigan llegando. Si conectas un conector
+    pesado que no les sirva, agrégalo ahí.
 - **Alias, nunca IDs** en agentes y settings. Los alias se mueven solos al actualizar la CLI; un
   ID fijo se queda en un modelo viejo, y uno que la CLI no conoce da error ("does not support
   this model").

@@ -17,10 +17,10 @@ Hecho y mantenido por [Carlos Isaac](https://github.com/carlosisaacfaura).
 |---|---|---|
 | `flota:verificador` | Intentar refutar un hallazgo concreto, o decidir entre alternativas | Fable |
 | `flota:revisor` | Buscar bugs reales (lógica, concurrencia, casos borde, contratos rotos) | Opus |
-| `flota:revisor-critico` | Lo mismo, en zonas críticas: dinero, seguridad, permisos, datos personales | Fable |
+| `flota:revisor-critico` | Lo mismo, en zonas críticas: dinero, seguridad, permisos, datos personales | Opus |
 | `flota:auditor` | Calidad, deuda técnica, UX/UI, accesibilidad, rendimiento (sin Bash) | Opus |
 | `flota:auditor-producto` | Ideas de producto ancladas al objetivo del proyecto (con web) | Opus |
-| `flota:implementador` | Implementar con decisiones: una tarea de un plan, una feature, una integración | Opus |
+| `flota:implementador` | Implementar con decisiones: una tarea de un plan, una feature, una integración | Sonnet (Opus en tareas largas o de dinero) |
 | `flota:investigador` | Investigar código, documentación o web; correr tests; traer evidencia | Sonnet |
 | `flota:mecanico` | Cambios ya especificados al detalle más sus tests | Sonnet |
 | `flota:explorador` | Buscar y localizar archivos, símbolos y callers | Haiku |
@@ -41,8 +41,8 @@ Además:
 
 ## Requisitos
 
-- Plan **Max** de Claude. La política usa Fable en dos agentes y xhigh en todos; en Pro gastaría
-  la semana muy rápido, y Fable se cobra aparte.
+- Plan **Max** de Claude. La política usa Fable en el verificador y xhigh en todos los agentes; en
+  Pro gastaría la semana muy rápido, y Fable se cobra aparte.
 - La app de Claude para escritorio o Claude Code en la terminal, actualizados.
 - macOS con `python3`, `git` y `rsync`. Vienen con el sistema; si `python3 --version` te pide
   instalar las herramientas de desarrollo de Apple, acepta.
@@ -82,8 +82,8 @@ Tres ejemplos:
 - **Ejecutar un plan.** "Implementa la tarea 3 del plan con flota:implementador y después
   revísala con flota:revisor."
 
-Sin pedir nada, Claude delega según la tabla de la política: lo mecánico a Sonnet, lo que exige
-criterio a Opus y lo crítico a Fable.
+Sin pedir nada, Claude delega según la tabla de la política: la implementación y lo mecánico a
+Sonnet, la revisión a Opus y la verificación final a Fable.
 
 La primera vez que corras la auditoría, Claude Code pide aprobar el workflow `flota:auditar`;
 elige "no volver a preguntar". En modo de permisos auto, los comandos de los agentes no piden

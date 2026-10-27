@@ -1,8 +1,8 @@
 ---
 name: implementador
-description: Implementa tareas de código que requieren DECISIONES (Opus): una tarea de un plan, una feature, integrar backend con frontend, cambiar un flujo que cruza varios módulos. Lee la spec y el código, decide dentro del alcance, escribe los tests y deja la suite en verde, y reporta las decisiones que tomó. Para cambios ya especificados al detalle (refactor idéntico, boilerplate, tests con un patrón dado) usa flota:mecanico; para revisar usa flota:revisor.
-disallowedTools: Agent
-model: opus
+description: Implementa tareas de código que requieren DECISIONES (Sonnet; súbelo a opus en tareas largas o de dinero): una tarea de un plan, una feature, integrar backend con frontend, cambiar un flujo que cruza varios módulos. Lee la spec y el código, decide dentro del alcance, escribe los tests y deja la suite en verde, y reporta las decisiones que tomó. Para cambios ya especificados al detalle (refactor idéntico, boilerplate, tests con un patrón dado) usa flota:mecanico; para revisar usa flota:revisor.
+disallowedTools: Agent, Artifact, SearchPlugins, mcp__visualize__*, mcp__terminal__*, mcp__PowerPoint__By_Anthropic___*, mcp__claude-in-chrome__*, mcp__computer-use__*, mcp__scheduled-tasks__*, mcp__mcp-registry__*, mcp__ccd_session_mgmt__*, mcp__ccd_sidebar__*, mcp__ccd_window__*, mcp__ccd_view__*, mcp__ccd_settings__*, mcp__ccd_host__*, mcp__ccd_directory__*, mcp__ccd_connectors__*, mcp__ccd_pr__*
+model: sonnet
 effort: xhigh
 ---
 

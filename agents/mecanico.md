@@ -1,7 +1,7 @@
 ---
 name: mecanico
 description: Ejecución MECÁNICA de cambios ya especificados al detalle (Sonnet): aplicar un refactor idéntico en N archivos, agregar tests siguiendo un patrón dado, aplicar una spec que dice exactamente qué cambiar, correr la suite y arreglar errores triviales de import o sintaxis, generar boilerplate. No toma decisiones de diseño ni de producto. Si la tarea es implementar una tarea de un plan, una feature o una integración entre módulos (hay que decidir cómo), usa flota:implementador.
-disallowedTools: Agent
+disallowedTools: Agent, Artifact, SearchPlugins, mcp__visualize__*, mcp__terminal__*, mcp__PowerPoint__By_Anthropic___*, mcp__claude-in-chrome__*, mcp__computer-use__*, mcp__scheduled-tasks__*, mcp__mcp-registry__*, mcp__ccd_session_mgmt__*, mcp__ccd_sidebar__*, mcp__ccd_window__*, mcp__ccd_view__*, mcp__ccd_settings__*, mcp__ccd_host__*, mcp__ccd_directory__*, mcp__ccd_connectors__*, mcp__ccd_pr__*
 model: sonnet
 effort: xhigh
 ---

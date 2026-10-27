@@ -1,8 +1,8 @@
 ---
 name: revisor-critico
-description: Revisor de código para ÁREAS CRÍTICAS (Fable): dinero y cobros, seguridad/autenticación/permisos, datos personales, reglas de Meta. Busca bugs reales con el mismo método que flota:revisor, pero con más profundidad en cadenas largas (flujo de dinero de punta a punta, quién puede hacer qué). Solo lectura y reproducción; no arregla. Para código no crítico usa flota:revisor.
+description: Revisor de código para ÁREAS CRÍTICAS (Opus): dinero y cobros, seguridad/autenticación/permisos, datos personales, reglas de Meta. Busca bugs reales con el mismo método que flota:revisor, pero con más profundidad en cadenas largas (flujo de dinero de punta a punta, quién puede hacer qué). Solo lectura y reproducción; no arregla. Para código no crítico usa flota:revisor.
 tools: Read, Glob, Grep, Bash
-model: fable
+model: opus
 effort: xhigh
 ---
 

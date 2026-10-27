@@ -3,6 +3,26 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.3.0 — 2026-10-27
+
+- **Pruebas a ciegas en código real.** Se hicieron en un SaaS con pagos, con bugs plantados, tareas
+  con tests ocultos y jueces de otra familia. Cambian dos roles:
+  - `flota:revisor-critico` pasa de **Fable a Opus**. Encontró 13 de 14 bugs plantados contra 9 de
+    14 de Fable, sin falsos positivos, y cuesta ~27% menos.
+  - `flota:implementador` pasa de **Opus a Sonnet** (xhigh). Empató o superó a Opus en 5 tareas con
+    decisiones y costó ~48% menos. En tareas largas o de dinero, la política indica pasarle
+    `model: opus`.
+- `flota:verificador` sigue en Fable: empató con Opus (12/12), pero aporta una verificación de otra
+  familia.
+- **El esfuerzo sigue en xhigh en todos los roles.** En la prueba, high empeoró al implementador
+  (último en las 5 tareas) y le hizo perder un bug real al investigador.
+- **`flota:implementador` y `flota:mecanico` ya no cargan herramientas que no usan** (artefactos,
+  controles de la app, navegador de Chrome, etc.). Arrancan con ~25% menos contexto. Es una lista
+  de exclusión: las herramientas nuevas de Claude Code les siguen llegando.
+- **La política suma "Contexto y pausas".** Compactar antes de una pausa larga evita reescribir
+  todo el caché al volver, que en el uso medido era ~1/3 del gasto de las sesiones principales.
+  También corrige la nota sobre el esfuerzo por llamada: existe desde la CLI 2.1.292.
+
 ## 1.2.1 — 2026-10-15
 
 - **Recalibración tras Haiku 5.5** (salió el 7-oct): sin cambios de asignación.
