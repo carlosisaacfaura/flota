@@ -12,7 +12,7 @@
       "name": "flota",
       "source": "./",
       "description": "Subagentes tipados (verificador, revisor, revisor crítico, auditores, implementador, investigador, mecánico, explorador) con el modelo y el esfuerzo que mejor rinden en cada rol, un hook que impide abaratarlos en silencio, la política de modelos y la auditoría integral de proyectos.",
-      "version": "1.3.0"
+      "version": "1.3.1"
     }
   ]
 }

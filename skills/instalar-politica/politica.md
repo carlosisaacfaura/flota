@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.3.0 -->
-## Política de modelos (flota v1.3.0)
+<!-- flota:politica:inicio v1.3.1 -->
+## Política de modelos (flota v1.3.1)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -181,6 +181,26 @@ Reglas:
     `/effort`) que ya **no fuerza xhigh** y funciona con cualquier esfuerzo. Excepción:
     `claude --effort ultracode` al arrancar sí fija xhigh.
   - No hace falta para lanzar agentes; los subagentes se lanzan igual en cualquier esfuerzo.
+  - **Default: apagado. Claude decide cuándo conviene y lo propone** (decidido el 27-oct). El
+    usuario trabaja siempre en Opus 5.5 xhigh con ultracode apagado. Al recibir cada pedido,
+    evalúa si un workflow (varios agentes en paralelo, con verificación adversarial) daría un
+    resultado claramente mejor que trabajar solo o con 1–3 agentes tipados.
+    - **Conviene cuando hay que cubrir mucho en paralelo:** auditar un proyecto entero, revisar
+      un cambio grande (más de ~15 archivos o varias zonas), migrar o refactorizar en muchos
+      archivos.
+    - **Conviene en investigación con muchas fuentes o ángulos,** o en una decisión de
+      arquitectura con alternativas que vale la pena juzgar por separado.
+    - **Conviene en una revisión crítica** de dinero, seguridad o permisos, donde vale verificar
+      cada hallazgo con un agente aparte.
+    - **Conviene si el usuario pide** "a fondo", "exhaustivo" o "lo mejor posible" sobre algo
+      grande.
+    - **No conviene** para preguntas, conversación, cambios acotados, tareas de pocos archivos o
+      configuraciones chicas: ahí basta con trabajar solo o con agentes tipados.
+    - **Si conviene, antes de empezar** di en una línea qué haría el workflow, cuántos agentes y
+      el % estimado de la semana, y pregunta "¿lo lanzo como workflow?". Un sí del usuario es el
+      opt-in para esa tarea y nada más. Si dice que no, o no lo contesta, sigue sin workflow.
+    - **Nunca enciendas ultracode por tu cuenta.** Lanzar un workflow requiere el sí del usuario
+      (regla de Claude Code), y uno puede costar entre 5% y 20% de la semana.
   - Úsalo **por tarea**, escribiendo "ultracode" en el mensaje de una auditoría, investigación,
     decisión de arquitectura o revisión crítica.
   - No lo dejes activado permanentemente (no pongas `"ultracode": true` en settings). Apágalo

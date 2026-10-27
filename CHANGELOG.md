@@ -3,6 +3,17 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.3.1 — 2026-10-27
+
+- **Claude decide cuándo conviene un workflow y te lo propone.** Trabajas siempre en Opus 5.5
+  xhigh con ultracode apagado. Cuando un pedido rinde claramente más con varios agentes en
+  paralelo, Claude te lo propone antes de empezar: qué haría, cuántos agentes y el % estimado de
+  la semana. Tú respondes "sí" o "no". Pasa, por ejemplo, al auditar un proyecto entero, revisar
+  un cambio grande, migrar muchos archivos, investigar con muchas fuentes o hacer una revisión
+  crítica de dinero o seguridad. Para el resto, Claude trabaja solo o con los agentes de flota,
+  sin preguntar.
+- Sin cambios en la asignación de modelos.
+
 ## 1.3.0 — 2026-10-27
 
 - **Pruebas a ciegas en código real.** Se hicieron en un SaaS con pagos, con bugs plantados, tareas
