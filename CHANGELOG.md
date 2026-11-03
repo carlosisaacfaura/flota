@@ -3,6 +3,29 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.3.2 — 2026-11-03
+
+- **Cada pedido sigue tres pasos fijos.** Tras el 1.3.1, los registros de una semana mostraron
+  que Claude no propuso ningún workflow. Con eso casi desapareció la verificación (de 137 corridas
+  del verificador a 4), y el implementador tardaba ~50% más porque hacía solo tareas grandes. La
+  política ahora abre con "Cómo ejecutar cada pedido":
+  1. **Antes de empezar,** Claude elige el formato y te propone un workflow cuando conviene, con
+     el mismo criterio del 1.3.1.
+  2. **En una implementación grande** (más de ~30 min), Claude lanza 3 `flota:implementador` en
+     paralelo, 4 como máximo, sobre archivos distintos. Antes decide lo compartido (tipos,
+     contratos, qué archivos toca cada uno) y lo escribe en cada encargo.
+     - Según una simulación con 416 corridas reales, 3 piezas cuestan lo mismo y tardan ~30%
+       menos, porque el 69% del costo de un implementador es releer su propio contexto.
+     - Desde 5 piezas el costo sube.
+  3. **Al terminar código,** Claude lanza `flota:revisor` o `flota:revisor-critico` sin
+     preguntar, y un `flota:verificador` por cada hallazgo alto, por ~1–2% de la semana por
+     tarea.
+- **Compactación en pausa:** Claude Code ya resume solo las sesiones inactivas de más de 200k
+  tokens (`idleCompaction`, activa por defecto). La política deja de pedir que Claude recomiende
+  `/compact` antes de una pausa.
+- Sin cambios en la asignación de modelos. `flota:verificador` sigue en Fable.
+- Corrige `/flota:instalar-politica`, que todavía decía que `flota:revisor-critico` usa Fable.
+
 ## 1.3.1 — 2026-10-27
 
 - **Claude decide cuándo conviene un workflow y te lo propone.** Trabajas siempre en Opus 5.5

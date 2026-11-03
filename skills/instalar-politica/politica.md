@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.3.1 -->
-## Política de modelos (flota v1.3.1)
+<!-- flota:politica:inicio v1.3.2 -->
+## Política de modelos (flota v1.3.2)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -11,6 +11,68 @@ en cada actualización. Tus propias instrucciones van fuera de los marcadores.
 
 **Prioridad del usuario: el MEJOR resultado, no el mayor ahorro, sin dejar la semana sin cuota
 en un día.** El juicio se concentra donde rinde y el barrido va barato.
+
+### Cómo ejecutar cada pedido (orden fijo, desde el 3-nov)
+
+Medido el 3-nov en los registros de la semana anterior: con ultracode apagado y la propuesta de
+workflow como regla suelta, no hubo ni una propuesta. Los workflows bajaron de ~11 al día a 1 en
+la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador` tardó ~50% más (mediana
+35 → 50 min), porque hacía solo y en serie tareas grandes. Para todo pedido que implique trabajo
+(no preguntas ni conversación), sigue estos pasos en orden:
+
+1. **Antes de empezar, elige el formato y dilo en una línea.**
+   - **Workflow** cuando:
+     - hay que cubrir mucho en paralelo: auditar un proyecto, revisar un cambio de más de ~15
+       archivos o varias zonas, o migrar o refactorizar muchos archivos;
+     - hay que investigar con muchas fuentes o ángulos, o comparar alternativas de arquitectura;
+     - es una revisión crítica de dinero, seguridad o permisos sobre algo grande;
+     - el usuario pide "a fondo", "exhaustivo" o "lo mejor posible" sobre algo grande.
+
+     Di qué haría, cuántos agentes y el % estimado de la semana, pregunta "¿lo lanzo como
+     workflow?" y espera. Un sí vale solo para esa tarea; si dice que no, sigue con el paso 2.
+   - **Piezas paralelas** (paso 2) en una implementación grande que se puede partir.
+   - **Solo o con un agente tipado** en todo lo demás.
+2. **Implementación grande: pártela en piezas paralelas.** Aplica si estimas más de ~30 min de un
+   `flota:implementador` (unas 100 llamadas o más) y el trabajo se separa en piezas que tocan archivos
+   distintos.
+   - Lanza **3** `flota:implementador` en paralelo: 2 si solo hay dos piezas reales, y **4 como
+     máximo**.
+   - **Por qué 3:** el 69% del costo de un implementador es releer su propio contexto, que crece
+     ~3.300 tokens por llamada y termina en ~440k (mediana de 416 corridas). Partir achica ese
+     contexto. Simulación con las 207 corridas de más de 100 llamadas, con briefs completos:
+
+     | Piezas | Costo | Tiempo |
+     |---|---|---|
+     | 2 | ~102% | ~90% |
+     | 3 | ~100% | ~70% |
+     | 4 | ~102% | ~60% |
+     | 5 | ~107% | ~52% |
+     | 6 | ~112% | ~48% |
+
+     Desde 5 piezas el costo sube y crece el riesgo de que no encajen entre sí. Es una
+     estimación: confírmala con tareas reales en la próxima recalibración que publica el mantenedor de flota.
+   - **Antes de lanzarlas, decide tú lo compartido** (tipos, firmas, contratos de API, nombres,
+     migraciones) y escríbelo en cada brief, con los archivos que debe leer y los que puede tocar.
+     Sin eso, cada pieza repite la exploración y 3 piezas cuestan ~40% más.
+   - **Reglas de las piezas:**
+     - Cada archivo compartido tiene un solo dueño.
+     - Las piezas no hacen commit y corren solo sus propios tests.
+     - No levantan servidores ni migraciones a la vez.
+     - Al final, la sesión principal corre la suite completa una vez.
+   - **No partas** si las piezas dependen una de otra en cadena: ahí va un solo `flota:implementador`,
+     o piezas en secuencia.
+   - **Más de 4** solo en cambios mecánicos repetidos en muchos módulos, y eso ya es un workflow
+     (paso 1).
+   - En paralelo se gasta lo mismo en menos tiempo. Si el límite de 5 horas está cerca, avisa
+     antes de lanzarlas.
+3. **Al terminar código, verifica sin preguntar.**
+   - Si el cambio toca dinero, cobros, seguridad, permisos o datos personales, lanza
+     `flota:revisor-critico`.
+   - Si es una feature nueva o un cambio de más de ~5 archivos, lanza `flota:revisor`.
+   - Cambios chicos, documentación y configuración no llevan revisión aparte.
+   - Cada hallazgo alto o crítico pasa por un `flota:verificador` antes de corregirlo: uno por
+     hallazgo, en paralelo. Los hallazgos medios y bajos se corrigen o reportan directo.
+   - Costo típico: ~1–2% de la semana por tarea. Si un workflow ya verificó, no repitas.
 
 | Rol | Cómo se invoca | Modelo · effort | Por qué |
 |---|---|---|---|
@@ -45,6 +107,10 @@ en un día.** El juicio se concentra donde rinde y el barrido va barato.
    Con calidad empatada se mantiene Fable por diseño: es el único rol de otra familia que revisa
    el trabajo de los revisores Opus, y pesa ~5% del gasto. Si la cuota aprieta, es el primer
    candidato a pasar a Opus.
+   - El aviso "Fable requiere créditos" del 29-oct fue por una suscripción que no era Max: no es
+     motivo para cambiarlo.
+   - Desde el 3-nov el paso 3 lo usa en cada hallazgo alto. Si su parte del gasto pasa de ~10%,
+     revísalo con recalibración que publica el mantenedor de flota.
 3. **Revisor.** Opus 5.5 es una mejora clara sobre Opus 5 (+bugs detectados, 20% más barato) y
    no hay evidencia para pagar Fable.
 4. **Revisor crítico: Opus desde el 27-oct.** Prueba a ciegas en el código de dinero y permisos
@@ -181,24 +247,9 @@ Reglas:
     `/effort`) que ya **no fuerza xhigh** y funciona con cualquier esfuerzo. Excepción:
     `claude --effort ultracode` al arrancar sí fija xhigh.
   - No hace falta para lanzar agentes; los subagentes se lanzan igual en cualquier esfuerzo.
-  - **Default: apagado. Claude decide cuándo conviene y lo propone** (decidido el 27-oct). El
-    usuario trabaja siempre en Opus 5.5 xhigh con ultracode apagado. Al recibir cada pedido,
-    evalúa si un workflow (varios agentes en paralelo, con verificación adversarial) daría un
-    resultado claramente mejor que trabajar solo o con 1–3 agentes tipados.
-    - **Conviene cuando hay que cubrir mucho en paralelo:** auditar un proyecto entero, revisar
-      un cambio grande (más de ~15 archivos o varias zonas), migrar o refactorizar en muchos
-      archivos.
-    - **Conviene en investigación con muchas fuentes o ángulos,** o en una decisión de
-      arquitectura con alternativas que vale la pena juzgar por separado.
-    - **Conviene en una revisión crítica** de dinero, seguridad o permisos, donde vale verificar
-      cada hallazgo con un agente aparte.
-    - **Conviene si el usuario pide** "a fondo", "exhaustivo" o "lo mejor posible" sobre algo
-      grande.
-    - **No conviene** para preguntas, conversación, cambios acotados, tareas de pocos archivos o
-      configuraciones chicas: ahí basta con trabajar solo o con agentes tipados.
-    - **Si conviene, antes de empezar** di en una línea qué haría el workflow, cuántos agentes y
-      el % estimado de la semana, y pregunta "¿lo lanzo como workflow?". Un sí del usuario es el
-      opt-in para esa tarea y nada más. Si dice que no, o no lo contesta, sigue sin workflow.
+  - **Default: apagado** (decidido el 27-oct). El usuario trabaja siempre en Opus 5.5 xhigh con
+    ultracode apagado. Cuándo proponer un workflow lo dice el paso 1 de "Cómo ejecutar cada
+    pedido", al inicio de esta política.
     - **Nunca enciendas ultracode por tu cuenta.** Lanzar un workflow requiere el sí del usuario
       (regla de Claude Code), y uno puede costar entre 5% y 20% de la semana.
   - Úsalo **por tarea**, escribiendo "ultracode" en el mensaje de una auditoría, investigación,
@@ -216,13 +267,16 @@ Reglas:
   - **Contexto y pausas** (medido el 27-oct en los registros: releer contexto es la mayor parte
     del costo):
     - Volver a una sesión grande después de más de 1 h reescribe el caché entero. Entre el 13 y el
-      27-oct eso fue ~1/3 del gasto de las sesiones principales. Si el usuario dice que se va por
-      un rato o cierra una fase, y la sesión pasa de ~300k tokens (en la app, revísalo con
-      `get_usage`), recomiéndale `/compact` *antes* de irse: con el caché activo cuesta ~5% de
-      esa reescritura. Tú no puedes compactar; solo recomendarlo.
-    - Una sesión por fase, no por proyecto: el 72% del gasto de las sesiones principales ocurrió
-      con más de 400k tokens de contexto. Al cambiar de fase, propone abrir una sesión nueva con
-      una nota de traspaso.
+      27-oct eso fue ~1/3 del gasto de las sesiones principales.
+    - Claude Code ya lo resuelve solo con la **compactación en pausa** (`idleCompaction`, activa
+      por defecto). Una sesión de más de 200k tokens que queda inactiva se resume antes de que
+      venza el caché, y el resumen se usa en el siguiente mensaje. En la app corrió 29 veces en
+      la semana del 28-oct. Se apaga con `"idleCompaction": false` en settings. No hace falta
+      recomendar `/compact` antes de una pausa.
+    - Contexto chico, aunque la sesión sea larga: el 72% del gasto de las sesiones principales
+      ocurrió con más de 400k tokens de contexto. La sesión del proyecto se mantiene; lo que se
+      cuida es su tamaño. Compacta al terminar una etapa. Para un trabajo grande y separado,
+      propone una sesión hija con una nota de traspaso, así la del proyecto no crece.
   - **`flota:implementador` y `flota:mecanico` excluyen herramientas que nunca usaron** en 136 corridas
     (artefactos, Vercel, Higgsfield, trading, correo, control de la app, etc.). Arrancaban con
     ~109k tokens de contexto. Es una lista de exclusión (`disallowedTools`), no de permitidos,

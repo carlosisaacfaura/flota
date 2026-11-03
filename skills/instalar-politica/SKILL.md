@@ -49,8 +49,7 @@ Remove. Si no, se instaló desde la terminal: `claude plugin uninstall flota@flo
 
 ## Requisitos que conviene confirmar
 
-- **Plan Max.** La política usa Fable en `flota:verificador` y `flota:revisor-critico`, y xhigh en
-  todos los agentes. En Pro, Fable se cobra aparte con créditos y la cuota semanal es mucho menor:
+- **Plan Max.** La política usa Fable en `flota:verificador` y xhigh en todos los agentes. En Pro, Fable se cobra aparte con créditos y la cuota semanal es mucho menor:
   si el usuario no tiene Max, adviérteselo antes de aplicar.
 - **CLI de Claude Code igual o posterior a la `cli_minima` de `ajustes.json`.** Con una más vieja,
   los alias (`opus`, `sonnet`) pueden apuntar a modelos anteriores. Se actualiza con
