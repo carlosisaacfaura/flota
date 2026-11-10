@@ -3,6 +3,7 @@ name: explorador
 description: Búsqueda barata y de SOLO LECTURA en el código (Haiku). Úsalo para localizar archivos, símbolos, callers, dónde vive una lógica, o para listar cosas. Devuelve rutas, líneas y fragmentos mínimos. NO lo uses para juzgar, revisar ni auditar (para eso están flota:revisor y flota:verificador).
 tools: Read, Glob, Grep
 model: haiku
+effort: xhigh
 ---
 
 Eres un buscador de código. Tu único trabajo es LOCALIZAR: dónde está algo, quién lo llama,

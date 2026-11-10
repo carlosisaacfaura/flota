@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.3.2 -->
-## Política de modelos (flota v1.3.2)
+<!-- flota:politica:inicio v1.4.0 -->
+## Política de modelos (flota v1.4.0)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -77,15 +77,15 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
 | Rol | Cómo se invoca | Modelo · effort | Por qué |
 |---|---|---|---|
 | Sesión principal | selector de modelo de la app | **Opus 5.5 · xhigh** | Ver nota 1 |
-| Verificador / juez | `flota:verificador` | `fable` · xhigh | Ver nota 2 |
+| Verificador / juez | `flota:verificador` | `fable` (= Fable 5.2) · xhigh | Ver nota 2 |
 | Revisor (buscar bugs) | `flota:revisor` | `opus` (= Opus 5.5) · xhigh | Ver nota 3 |
-| Revisor crítico (dinero, seguridad, reglas de Meta) | `flota:revisor-critico` | `opus` (= Opus 5.5) · xhigh | Ver nota 4 |
+| Revisor crítico (dinero, seguridad, reglas de Meta) | `flota:revisor-critico` | `opus` (= Opus 5.5) · xhigh; `model: fable` + `effort: high` en cambios críticos grandes | Ver nota 4 |
 | Auditor (calidad, UX/UI, accesibilidad, rendimiento; sin Bash) | `flota:auditor` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Ideas de producto (con web) | `flota:auditor-producto` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Investigar, docs/web, tests, evidencia | `flota:investigador` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
 | Implementar con decisiones (tarea de un plan, feature, integración) | `flota:implementador` | `sonnet` (= Sonnet 5.5) · xhigh; `model: opus` en tareas largas o de dinero | Ver nota 9 |
 | Cambios mecánicos ya especificados al detalle + tests | `flota:mecanico` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
-| Buscar, listar, localizar | `flota:explorador` | `haiku` (= Haiku 5.5) · hereda xhigh | Ver nota 5 |
+| Buscar, listar, localizar | `flota:explorador` | `haiku` (= Haiku 5.5) · xhigh | Ver nota 5 |
 | Sin tipo (general-purpose, agentes de plugins sin `model:`, workflows sin modelo) | — | `CLAUDE_CODE_SUBAGENT_MODEL=opus` · effort de la sesión | Ver nota 7 |
 
 1. **Sesión principal.** Opus 5.5 supera a Fable 5.1 a igual esfuerzo en 6 fuentes
@@ -99,9 +99,17 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
    - **Nota sobre la recomendación:** Anthropic no recomienda xhigh para Opus 5.5 (su default es
      medium). Esta recomendación sale de benchmarks medidos. Opus 5.5 a xhigh cuesta
      aproximadamente lo mismo por tarea que Fable 5.1 a high, que era la configuración anterior.
-   - **Cuándo pasar a Fable 5.1 (high):** en sesiones autónomas de horas, en investigación
+   - **Fable 5.2 (9-nov) no cambia esto.** Al mismo esfuerzo empatan en código (CursorBench,
+     Terminal-Bench, orquestando subagentes Sonnet) y Opus gana en planificar y redactar entregables
+     (GDPval xhigh 1835 vs 1751 con intervalos separados; Fable 5.2 high, 1718). Con los tokens
+     reales de las sesiones principales del 2 al 9-nov, Fable 5.2 costaría 1,47× ($2.100 → $3.100
+     a precio de API) y agotaría su tope semanal en 1 o 2 días.
+   - **Cuándo pasar a Fable 5.2 (high):** en sesiones autónomas de horas, en investigación
      profunda de muchos pasos, o cuando xhigh falla dos veces con el mismo problema (escalera
-     oficial).
+     oficial). En high rinde casi igual que en xhigh y cuesta ~30% menos.
+     - Alternativa sin medir: `/advisor fable` solo en ese tramo y `/advisor off` al terminarlo.
+       No invalida el caché de la sesión (`/model fable` sí), pero cada consulta relee toda la
+       conversación sin caché a precio de Fable (~$3 con 400k de contexto).
 2. **Verificador: Fable.** En la prueba a ciegas del 27-oct (un SaaS propio del mantenedor, 12 hallazgos con 5
    falsos, 2 rondas) Fable y Opus acertaron 12/12 en todas las corridas; Opus costó ~45% menos.
    Con calidad empatada se mantiene Fable por diseño: es el único rol de otra familia que revisa
@@ -111,6 +119,10 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
      motivo para cambiarlo.
    - Desde el 3-nov el paso 3 lo usa en cada hallazgo alto. Si su parte del gasto pasa de ~10%,
      revísalo con recalibración que publica el mantenedor de flota.
+   - **9-nov, Fable 5.2:** el alias pasó solo de 5.1 a 5.2 con la CLI 2.1.321. En las dos pruebas
+     a ciegas (12 y 16 hallazgos, 5 rondas) Fable 5.2 xhigh, Fable 5.2 high y Opus 5.5 acertaron
+     todos los veredictos: sigue el empate y Opus cuesta ~la mitad ($2,26 vs $4,31 por
+     verificación). La semana del 3-nov usó $271 del tope de Fable (87 corridas, con 5.1).
 3. **Revisor.** Opus 5.5 es una mejora clara sobre Opus 5 (+bugs detectados, 20% más barato) y
    no hay evidencia para pagar Fable.
 4. **Revisor crítico: Opus desde el 27-oct.** Prueba a ciegas en el código de dinero y permisos
@@ -119,6 +131,20 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
    corrida). La diferencia no es significativa con n=2 (Fisher p≈0,17), pero fue en la misma
    dirección en las dos rondas y Opus es más barato: con calidad al menos igual gana el más
    barato. Es un agente propio desde el 24-sep, con effort independiente del revisor.
+   - **9-nov, Fable 5.2 high vs Opus 5.5 xhigh** (un SaaS propio del mantenedor, área completa de dinero y
+     permisos sin lista de archivos, sin tests ni docs, 4 bugs históricos reintroducidos + 5
+     plantados, 3 rondas): Fable encontró 20/27 y Opus 17/27. Las 3 diferencias fueron bugs que
+     solo vio Fable, todos de permisos en policies o triggers (McNemar 3–0, p=0,25: no
+     significativo). Extras reales 17 vs 12, falsos positivos 0 vs 3. Costo por revisión $7,91 vs
+     $5,05. Va en la misma dirección que el benchmark de Anthropic (+5,9 F1 con intervalo).
+   - **Por qué no pasa entero a Fable:** con 61 corridas por semana serían ~$535 de Fable, más
+     de lo que deja libre el tope semanal junto con el verificador. Y al acabarse el tope, Claude
+     Code no pasa solo a Opus (`fallbackModel` cubre sobrecarga, no límites de uso): el agente
+     falla, y Fable se gastaría por orden de llegada y no donde importa.
+   - **Regla desde el 9-nov: sube a `model: fable` + `effort: high` por llamada** en cambios
+     críticos grandes: cobros, reembolsos, webhooks de pago, permisos o policies que crucen varios
+     archivos o vayan a producción. Antes de subir, mira `/usage`: si "Weekly · Fable" pasa de ~70%,
+     no subas y avísalo. Apunta a ~1 de cada 4 revisiones críticas.
 5. **Roles de volumen.** Desde la CLI 2.1.284 el alias `sonnet` es **Sonnet 5.5** (28-sep):
    mismo precio que Sonnet 5 y claramente mejor (GDPval max 1844 vs 1449, FrontierCode en high
    49,4 vs 39,4).
@@ -128,9 +154,12 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
    - **Explorador en Haiku 5.5** (15-oct). Salió el 7-oct y el alias `haiku` lo resuelve desde la
      CLI 2.1.300. Es un salto grande sobre Haiku 4.5 (Epoch ECI 159 vs 142) y cuesta 10 veces
      menos, salvo con prompts de más de 100K tokens, que pagan 5 veces más por token.
-   - **Effort del explorador: hereda xhigh, por decisión del mantenedor de flota.** Haiku 5.5 es el primer
+   - **Effort del explorador: xhigh, por decisión del usuario.** Haiku 5.5 es el primer
      Haiku con effort y su default es medium. Anthropic y los dos jueces recomendaban fijar
      medium; el mantenedor prefirió xhigh porque igual gasta muy poco.
+     - Va fijado con `effort: xhigh` en su frontmatter desde el 9-nov. Antes no lo tenía y, desde
+       la CLI 2.1.317, un subagente en otro modelo que la sesión ya no hereda el effort de la
+       sesión: corría en medium sin que nadie lo notara.
    - **Haiku 5.5 no reemplaza a Sonnet** en `flota:investigador` ni en `flota:mecanico`:
      - Su ficha oficial dice que alucina más que Sonnet y Opus, y el entregable del
        investigador es evidencia fiel.
@@ -201,8 +230,10 @@ Reglas:
   - Excepción deliberada: paneles de jueces de familias distintas, con "panel mixto" en la
     description.
 - **Effort por agente** va en el frontmatter (`effort:`). Sin ese campo, el subagente hereda el
-  de la sesión (verificado el 24-sep). Todos los tipados están en xhigh, verificado con
-  subagentes reales el 29-sep.
+  de la sesión solo si corre en el mismo modelo que ella. En otro modelo usa el effort guardado
+  de ese modelo o su default, que suele ser medium (CLI 2.1.317 o posterior, según su
+  changelog). Por eso todo agente tipado lleva `effort:` explícito. Todos están en xhigh,
+  verificado con subagentes reales el 29-sep; el explorador, desde el 9-nov.
   - Desde la CLI 2.1.292 la herramienta Agent acepta `effort` por llamada, y ese valor **le gana
     al frontmatter**. Úsalo solo para *subir* (p. ej. `max` puntual), nunca para bajar el de un
     agente tipado. El hook no lo bloquea: la regla depende de no pasarlo.
@@ -242,6 +273,11 @@ Reglas:
     - Conclusión: **no se baja el effort de ningún rol.**
   - Cambia el effort en pausas: cambiarlo en medio de una conversación invalida el caché.
   - **Nunca fijes `CLAUDE_CODE_EFFORT_LEVEL`:** le gana al effort de todos los agentes.
+- **Advisor (`/advisor`)**: nunca lo dejes como default (`advisorModel` en settings).
+  - Los subagentes lo heredan. Desde el 9-nov todos traen conectado un advisor de su propio
+    modelo, que solo usan cuando el advisor está activo. Con él prendido, los competidores de una
+    prueba a ciegas lo consultaron de 1 a 7 veces cada uno, y la prueba dejó de valer.
+  - Antes de una prueba a ciegas, confirma que no haya `advisorModel` en settings.
 - **Ultracode** = workflows automáticos para cada tarea que Claude juzgue sustancial.
   - Desde la CLI 2.1.284 es un interruptor aparte (`/effort ultracode on|off`, o Tab en
     `/effort`) que ya **no fuerza xhigh** y funciona con cualquier esfuerzo. Excepción:
@@ -263,7 +299,10 @@ Reglas:
   - Antes de lanzar algo >10%: di el % estimado y el reparto de modelos, y espera el ok.
   - Referencia de consumo (dato propio del 2-sep): ≈1,7% por agente Fable pesado, ≈0,85% por
     Opus 5 y ≈0,35% por Sonnet. Opus 5.5 cuesta ~20% menos por token que Opus 5.
-  - En Max, Fable tiene un tope del 50% de la cuota semanal.
+  - En Max y Ultra, Fable tiene un tope del 50% de la cuota semanal. Medido el 9-nov en Ultra
+    con los registros de este computador: el tope de Fable equivale a ~$500–600 por semana a
+    precio de API y la semana completa a ~$2.300 (estimación: supone que la cuota se descuenta
+    según el precio).
   - **Contexto y pausas** (medido el 27-oct en los registros: releer contexto es la mayor parte
     del costo):
     - Volver a una sesión grande después de más de 1 h reescribe el caché entero. Entre el 13 y el
@@ -288,7 +327,7 @@ Reglas:
 - **Dos CLI:** la `claude` de la terminal y la de la app pueden estar en versiones distintas y
   resolver `opus` a modelos distintos. Opus 5.5 exige la CLI 2.1.280 o posterior.
 
-Precios por millón de tokens (in/out): Fable 5.1 $10/$50 · Opus 5.5 $4/$20 · Opus 5 $5/$25 ·
+Precios por millón de tokens (in/out): Fable 5.2 $8/$40 (Fable 5.1 $10/$50) · Opus 5.5 $4/$20 · Opus 5 $5/$25 ·
 Sonnet 5.5 $2/$10 (igual que Sonnet 5) · Haiku 5.5 $0,10/$0,50 (con prompt ≤100K tokens; sobre
 100K, 5 veces más) · Haiku 4.5 $1/$5.
 <!-- flota:politica:fin -->

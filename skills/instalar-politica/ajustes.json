@@ -1,6 +1,6 @@
 {
-  "version": "1.3.2",
-  "cli_minima": "2.1.308",
+  "version": "1.4.0",
+  "cli_minima": "2.1.321",
   "env": {
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },

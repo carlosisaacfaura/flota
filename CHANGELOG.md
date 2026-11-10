@@ -3,6 +3,25 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.4.0 — 2026-11-09
+
+- **Fable 5.2 llega solo al verificador.** Con la CLI 2.1.321 el alias `fable` pasa de 5.1 a 5.2,
+  así que `flota:verificador` lo usa sin cambiar nada. Requiere esa CLI o una posterior.
+- **El revisor crítico sigue en Opus 5.5 y sube a Fable 5.2 high solo en cambios críticos
+  grandes:** cobros, reembolsos, webhooks de pago o permisos que crucen varios archivos o vayan a
+  producción, y solo si el tope semanal de Fable va bajo ~70%.
+  - En una prueba a ciegas difícil en código real de dinero y permisos (3 rondas), Fable 5.2 high
+    encontró 20 de 27 bugs y Opus 17 de 27. No es significativo (p=0,25), pero las diferencias
+    fueron todas a favor de Fable y en permisos.
+  - Pasarlo entero no cabe en el tope semanal de Fable, y al llenarse el tope Claude Code no
+    cambia solo a Opus.
+- **La sesión principal sigue en Opus 5.5 xhigh.** Opus gana en planificar y redactar, y Fable
+  5.2 costaría 1,47× con tokens reales. Cuando haga falta subir, el escalón ahora es Fable 5.2
+  high.
+- **`flota:explorador` lleva `effort: xhigh` explícito.** Desde la CLI 2.1.317 un subagente en
+  otro modelo que la sesión ya no hereda su esfuerzo, y corría en medium.
+- **Nueva regla: no dejes `/advisor` como default.** Los subagentes lo heredan y lo consultan.
+
 ## 1.3.2 — 2026-11-03
 
 - **Cada pedido sigue tres pasos fijos.** Tras el 1.3.1, los registros de una semana mostraron
