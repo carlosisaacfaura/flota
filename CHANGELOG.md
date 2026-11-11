@@ -3,6 +3,22 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.5.0 — 2026-11-11
+
+- **El trabajo visual va en Fable 5.2 por defecto.** `flota:implementador` recibe `model: fable`
+  por llamada cuando la tarea es diseñar o animar algo que se ve: landings, anuncios y videos
+  hechos con código, animaciones, escenas 3D y pantallas con diseño nuevo. Backend, lógica, tests
+  y retoques chicos de estilo siguen en el modelo normal del rol. Ningún rol cambia de modelo base.
+  - Prueba a ciegas con 3 encargos (landing, anuncio vertical, escena 3D), Fable 5.2 xhigh contra
+    Opus 5.5 xhigh: dos jueces a ciegas prefirieron a Fable en la landing y el anuncio, y el
+    mantenedor, también a ciegas, lo prefirió con claridad en los tres.
+  - Fable costó 2,8 veces más ($119 contra $43) y entregó la escena 3D en negro por un error de
+    una línea en un shader. Por eso la regla exige revisar lo visual en un navegador con GPU real.
+  - Son 3 encargos: es un indicio, no una diferencia significativa.
+- **Umbral de Fable en un solo lugar.** El 70% de uso semanal de Fable sobre el cual no se sube
+  de modelo ahora se define en una línea al inicio de la política. Se cambia editando ese número,
+  y se salta una vez diciendo "usa Fable igual". Lo usan esta regla y la del revisor crítico.
+
 ## 1.4.1 — 2026-11-10
 
 - **Fable 5.2 arranca en high en la sesión principal.** `ajustes.json` agrega

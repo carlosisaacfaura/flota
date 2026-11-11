@@ -1,5 +1,5 @@
 {
-  "version": "1.4.1",
+  "version": "1.5.0",
   "cli_minima": "2.1.321",
   "env": {
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"

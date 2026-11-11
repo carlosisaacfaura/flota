@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.4.1 -->
-## Política de modelos (flota v1.4.1)
+<!-- flota:politica:inicio v1.5.0 -->
+## Política de modelos (flota v1.5.0)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -11,6 +11,13 @@ en cada actualización. Tus propias instrucciones van fuera de los marcadores.
 
 **Prioridad del usuario: el MEJOR resultado, no el mayor ahorro, sin dejar la semana sin cuota
 en un día.** El juicio se concentra donde rinde y el barrido va barato.
+
+**Umbral de Fable para subir de modelo: 70%.** Este es el único lugar donde se define.
+- Las reglas que suben un agente a Fable por llamada (revisor crítico en cambios críticos grandes,
+  `flota:implementador` en trabajo visual) se aplican solo si "Weekly · Fable" en `/usage` está
+  bajo este número. Si está sobre el umbral, no subas y avísalo.
+- **Para cambiarlo:** edita el número de esta línea, o dile a Claude "sube el umbral de Fable a N%".
+- **Para saltarlo una sola vez:** di "usa Fable igual" en el pedido. Vale solo para esa tarea.
 
 ### Cómo ejecutar cada pedido (orden fijo, desde el 3-nov)
 
@@ -83,7 +90,7 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
 | Auditor (calidad, UX/UI, accesibilidad, rendimiento; sin Bash) | `flota:auditor` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Ideas de producto (con web) | `flota:auditor-producto` | `opus` (= Opus 5.5) · xhigh | Ver nota 8 |
 | Investigar, docs/web, tests, evidencia | `flota:investigador` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
-| Implementar con decisiones (tarea de un plan, feature, integración) | `flota:implementador` | `sonnet` (= Sonnet 5.5) · xhigh; `model: opus` en tareas largas o de dinero | Ver nota 9 |
+| Implementar con decisiones (tarea de un plan, feature, integración) | `flota:implementador` | `sonnet` (= Sonnet 5.5) · xhigh; `model: opus` en tareas largas o de dinero; `model: fable` en trabajo visual | Ver nota 9 |
 | Cambios mecánicos ya especificados al detalle + tests | `flota:mecanico` | `sonnet` (= Sonnet 5.5) · xhigh | Ver nota 5 |
 | Buscar, listar, localizar | `flota:explorador` | `haiku` (= Haiku 5.5) · xhigh | Ver nota 5 |
 | Sin tipo (general-purpose, agentes de plugins sin `model:`, workflows sin modelo) | — | `CLAUDE_CODE_SUBAGENT_MODEL=opus` · effort de la sesión | Ver nota 7 |
@@ -146,8 +153,9 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
      falla, y Fable se gastaría por orden de llegada y no donde importa.
    - **Regla desde el 9-nov: sube a `model: fable` + `effort: high` por llamada** en cambios
      críticos grandes: cobros, reembolsos, webhooks de pago, permisos o policies que crucen varios
-     archivos o vayan a producción. Antes de subir, mira `/usage`: si "Weekly · Fable" pasa de ~70%,
-     no subas y avísalo. Apunta a ~1 de cada 4 revisiones críticas.
+     archivos o vayan a producción. Antes de subir, mira `/usage`: si "Weekly · Fable" pasa del umbral
+     de Fable (definido al inicio de esta política), no subas y avísalo. Apunta a ~1 de cada 4
+     revisiones críticas.
 5. **Roles de volumen.** Desde la CLI 2.1.284 el alias `sonnet` es **Sonnet 5.5** (28-sep):
    mismo precio que Sonnet 5 y claramente mejor (GDPval max 1844 vs 1449, FrontierCode en high
    49,4 vs 39,4).
@@ -208,6 +216,40 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
      - **Límite de la evidencia:** las tareas duraron 5–9 min y las reales ~30 min. Por eso, en
        tareas largas (más de ~1 h estimada o que cruzan muchos módulos) o de dinero y seguridad,
        pasa `model: opus` al `flota:implementador`. Subir el modelo está permitido.
+   - **10-nov, trabajo visual: sube a `model: fable` por defecto.** Prueba a
+     ciegas con 3 encargos (landing con movimiento, anuncio vertical de 12 s, escena 3D con
+     física): Fable 5.2 xhigh contra Opus 5.5 xhigh, con el mismo agente y el mismo prompt, y dos
+     jueces a ciegas (Fable y Opus).
+     - Los dos jueces prefirieron a Fable en la landing (leve) y en el anuncio (uno leve, otro
+       claro), por dirección de arte y por no parecer plantilla.
+     - La escena 3D de Fable llegó rota: en negro con GPU real, por un `pow` de base negativa en un
+       shader combinado con antialiasing. Ganó la de Opus, que funcionaba. Con esa línea
+       arreglada, los dos jueces preferían la de Fable.
+     - **Juicio del usuario (11-nov):** comparó A y B sin saber cuál era cuál y prefirió a Fable
+       con claridad en los tres, "por mucho". La escena 3D la vio en la copia arreglada.
+     - Costo: Fable $119 contra Opus $43 en total (2,8×), y entre 1,2 y 2,5 veces más tiempo.
+     - **Límite de la evidencia:** son 3 encargos (indicio, no significativo) y no se comparó
+       contra Sonnet, el modelo por defecto del rol.
+     - **Regla (ampliada el 11-nov por decisión del usuario, tras su juicio a ciegas):** todo
+       trabajo visual va en Fable por defecto. Pasa `model: fable` al `flota:implementador` cuando la
+       tarea sea diseñar o animar algo que se ve.
+       - **Qué cuenta como trabajo visual:** landings y páginas donde el diseño importa, anuncios
+         y videos hechos con código (Remotion), animaciones, escenas 3D y simulaciones visuales, y
+         pantallas o componentes de cara al usuario con diseño nuevo.
+       - **Qué no cuenta:** backend, lógica, datos, tests, y retoques chicos de estilo en algo ya
+         diseñado. Eso sigue en el modelo normal del rol.
+       - **Si la sesión principal no corre en Fable,** delega la pieza visual a un `flota:implementador`
+         con `model: fable` en vez de diseñarla ella misma. Esto vale también dentro de los
+         skills de diseño web y de anuncios.
+       - **Umbral:** antes mira `/usage`. Si "Weekly · Fable" pasa del umbral de Fable (definido al
+         inicio de esta política), no subas: avísalo y sigue en el modelo normal, salvo que el
+         usuario diga "usa Fable igual".
+       - **Capacidad:** cada pieza de la prueba costó entre $30 y $56 de Fable, contra un tope
+         semanal de ~$500–600 que también usan el verificador y el revisor crítico. Con varias
+         piezas visuales en la semana el umbral se alcanza rápido: dilo cuando falte poco.
+     - **Verifica lo visual en Chrome con GPU real**, nunca solo con capturas por software
+       (SwiftShader): ahí el bug de la escena 3D no aparecía. En Playwright, `channel: 'chrome'`
+       con `--use-angle=metal --enable-gpu`.
 
 Reglas:
 - **Breadth barato, depth caro.** El barrido va en Sonnet/Haiku para hallar candidatos, y los
