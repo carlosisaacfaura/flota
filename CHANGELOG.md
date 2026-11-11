@@ -3,6 +3,17 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## 1.4.1 — 2026-11-10
+
+- **Fable 5.2 arranca en high en la sesión principal.** `ajustes.json` agrega
+  `modelSettings.claude-fable-5-2.effortLevel: high`. Antes, al elegir Fable en el selector, la
+  sesión arrancaba en su esfuerzo por defecto o en el último usado, y había que ponerlo en high a
+  mano. Los agentes tipados que corren en Fable conservan el `effort:` de su frontmatter (el
+  verificador sigue en xhigh).
+- **Por qué high y no xhigh:** en la sesión principal Fable 5.2 es un escalón puntual, y en high
+  rinde casi igual que en xhigh por ~30% menos. Medido el 10-nov en la prueba difícil: usa ~35%
+  menos turnos que Opus 5.5 xhigh, pero cuesta 1,6–1,9× más por tarea.
+
 ## 1.4.0 — 2026-11-09
 
 - **Fable 5.2 llega solo al verificador.** Con la CLI 2.1.321 el alias `fable` pasa de 5.1 a 5.2,

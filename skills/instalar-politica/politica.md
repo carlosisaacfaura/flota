@@ -1,5 +1,5 @@
-<!-- flota:politica:inicio v1.4.0 -->
-## Política de modelos (flota v1.4.0)
+<!-- flota:politica:inicio v1.4.1 -->
+## Política de modelos (flota v1.4.1)
 
 Instalada por el plugin **flota**. La mantiene su autor: cada vez que sale un modelo nuevo,
 recalibra con evidencia (benchmarks públicos verificados y pruebas propias a ciegas) y publica una
@@ -107,6 +107,9 @@ la semana, el `flota:verificador` de 137 corridas a 4, y el `flota:implementador
    - **Cuándo pasar a Fable 5.2 (high):** en sesiones autónomas de horas, en investigación
      profunda de muchos pasos, o cuando xhigh falla dos veces con el mismo problema (escalera
      oficial). En high rinde casi igual que en xhigh y cuesta ~30% menos.
+     - Se elige a mano en el selector de la app, al abrir la sesión o tras una pausa. Arranca solo
+       en high: desde el 10-nov `modelSettings` fija `effortLevel: high` para `claude-fable-5-2`.
+       Los agentes tipados que corren en Fable conservan el `effort:` de su frontmatter.
      - Alternativa sin medir: `/advisor fable` solo en ese tramo y `/advisor off` al terminarlo.
        No invalida el caché de la sesión (`/model fable` sí), pero cada consulta relee toda la
        conversación sin caché a precio de Fable (~$3 con 400k de contexto).

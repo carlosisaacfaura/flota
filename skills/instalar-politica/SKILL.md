@@ -4,7 +4,7 @@ description: >-
   Instala, actualiza o quita la política de modelos de flota en la configuración del usuario.
   Agrega el bloque de la política a ~/.claude/CLAUDE.md y los ajustes que un plugin no puede fijar
   solo en ~/.claude/settings.json: el modelo por defecto de los subagentes sin tipo, el esfuerzo de
-  Opus en la sesión principal y los modelos de respaldo. Úsalo al instalar flota, cuando el aviso de
+  Opus y de Fable en la sesión principal y los modelos de respaldo. Úsalo al instalar flota, cuando el aviso de
   inicio de sesión diga que hay una política nueva o que falta terminar la instalación, después de
   `claude plugin update flota@flota`, o cuando el usuario pida instalar, actualizar, revisar o
   desinstalar la política de flota.
@@ -19,7 +19,7 @@ puede hacer solo, y este skill las hace con el OK del usuario:
 - **`CLAUDE_CODE_SUBAGENT_MODEL`.** Es el modelo de los subagentes sin tipo: general-purpose y
   agentes de otros plugins que no fijan `model:`. Explore y Plan tienen su propio modelo y esta
   variable no los cambia.
-- **`modelSettings` y `fallbackModel`.** Fijan el esfuerzo de Opus en la sesión principal y los
+- **`modelSettings` y `fallbackModel`.** Fijan el esfuerzo de Opus y de Fable en la sesión principal y los
   modelos de respaldo.
 
 `S="${CLAUDE_PLUGIN_ROOT}/skills/instalar-politica/scripts/aplicar.py"`
