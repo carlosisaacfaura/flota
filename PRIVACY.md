@@ -18,6 +18,9 @@ tiene servidor propio y su autor no recibe ninguna información de quienes lo in
   abre su contenido ni lo escribe en un informe. Al instalar la política se guarda en tu equipo
   una copia de respaldo de tu `CLAUDE.md` y tu `settings.json`; si ese archivo tiene claves, la
   copia local también las tiene, y no sale de tu equipo.
+- **cuanto-falta (opcional).** Si lo instalas, guarda en tu equipo, en `~/.claude/cuanto-falta/`,
+  cuánto tardó cada subagente y qué estimó (rol, modelo, tiempos, fases y cifras; nunca
+  descripciones ni prompts). No se conecta a internet.
 - **Datos personales.** La auditoría lee el historial de git de tu proyecto, que incluye nombres
   y correos de quienes hicieron commits, y puede encontrar datos personales que estén en tu
   código. flota no los guarda ni los envía a ninguna parte.

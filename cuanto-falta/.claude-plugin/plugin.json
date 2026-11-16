@@ -1,0 +1,9 @@
+{
+  "name": "cuanto-falta",
+  "version": "0.2.0",
+  "description": "Muestra cuánto falta para que terminen los agentes y workflows de la sesión: un rango con su confianza y en qué va cada uno (leyendo, probando, escribiendo el informe...), ajustado en vivo. Mide su propia precisión y la deja en ~/.claude/cuanto-falta. Nunca bloquea nada.",
+  "author": {
+    "name": "Carlos Isaac"
+  },
+  "types": "./types/index.d.ts"
+}

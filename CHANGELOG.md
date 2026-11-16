@@ -3,6 +3,16 @@
 Cada versión dice qué cambió en la asignación de modelos y por qué. Así el aviso de actualización
 puede explicarle al usuario qué recibe.
 
+## cuanto-falta 0.2.0 — 2026-11-16 (plugin nuevo, opcional)
+
+- **Segundo plugin del marketplace: `cuanto-falta@flota`.** Muestra cuánto le falta a cada subagente
+  que corre (un rango con su confianza) y en qué fase va, ajustado en vivo, con un panel legible con
+  muchos agentes a la vez. flota no cambia: misma versión, misma política.
+- **Medido:** en 443 corridas reales de prueba (9–16 nov), el rango acertó el 80–85% de las veces
+  con un error mediano de 3,4–4,7 min, contra 36–43% de su versión anterior. En el último tramo de los
+  encargos largos la versión anterior tiene menos error, con la mitad de aciertos del rango. Detalle en
+  `cuanto-falta/herramientas/EVALUACION.md`.
+
 ## 1.5.0 — 2026-11-11
 
 - **El trabajo visual va en Fable 5.2 por defecto.** `flota:implementador` recibe `model: fable`

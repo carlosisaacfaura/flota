@@ -13,6 +13,12 @@
       "source": "./",
       "description": "Subagentes tipados (verificador, revisor, revisor crítico, auditores, implementador, investigador, mecánico, explorador) con el modelo y el esfuerzo que mejor rinden en cada rol, un hook que impide abaratarlos en silencio, la política de modelos y la auditoría integral de proyectos.",
       "version": "1.5.0"
+    },
+    {
+      "name": "cuanto-falta",
+      "source": "./cuanto-falta",
+      "description": "Muestra cuánto falta para que terminen los agentes y workflows de la sesión: un rango con su confianza y en qué va cada uno (leyendo, probando, escribiendo el informe...), ajustado en vivo. Mide su propia precisión y la deja en ~/.claude/cuanto-falta. Nunca bloquea nada.",
+      "version": "0.2.0"
     }
   ]
 }

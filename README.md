@@ -9,7 +9,8 @@ Hecho y mantenido por [Carlos Isaac](https://github.com/carlosisaacfaura).
 > **In English:** flota is a Claude Code plugin (in Spanish) that ships nine typed subagents, each
 > pinned to the Claude model and effort level that performs best for its role, plus a
 > whole-project audit workflow. The model assignment is recalibrated with evidence on every model
-> release. Requires a Max plan.
+> release. Requires a Max plan. An optional second plugin, **cuanto-falta**, shows how long each running
+> subagent has left (a range with its confidence) and what it is doing.
 
 ## Qué trae
 
@@ -89,6 +90,37 @@ La primera vez que corras la auditoría, Claude Code pide aprobar el workflow `f
 elige "no volver a preguntar". En modo de permisos auto, los comandos de los agentes no piden
 aprobación uno por uno.
 
+## cuanto-falta (opcional): cuánto le falta a cada agente
+
+Un segundo plugin del mismo marketplace. Con varios subagentes corriendo a la vez, muestra por cada
+uno **cuánto le falta, como un rango con su confianza** («~10–20 min»), y **en qué está** («corriendo
+pruebas», «escribiendo el informe»), ajustado en vivo. Arriba, cuándo termina todo. Sin datos dice
+«calculando», y si un agente va más lento que casi todas las corridas parecidas, «ya pasó lo típico»:
+nunca un número inventado.
+
+![Panel de cuanto-falta con cinco agentes](cuanto-falta/capturas/panel-cinco-oscuro.png)
+
+- **Cómo estima:** con el historial real de corridas por rol y modelo (las tablas que trae salen de
+  las corridas del mantenedor; puedes regenerarlas con las tuyas), la fase en que va cada agente, si
+  es una reanudación y cuánto lleva sin usar herramientas. Los agentes `flota:*` usan las tablas de su
+  rol.
+- **Cuánto acierta:** en 443 corridas reales de prueba, el rango contuvo lo que de verdad faltaba el
+  80–85% de las veces, con un error mediano de 3,4 a 4,7 min según el tramo de la corrida. Método,
+  números y límites en [`cuanto-falta/herramientas/EVALUACION.md`](cuanto-falta/herramientas/EVALUACION.md).
+- **Se mide solo:** compara cada estimación con lo que de verdad tardó el agente; `/cuanto-falta datos`
+  muestra el error y la cobertura.
+- **Requisitos:** Claude Code con mods de hooks de funciones (probado en la 2.1.325). No necesita plan
+  Max ni la política de flota, pero conoce sus roles.
+
+Instalar, con el marketplace de flota ya agregado:
+
+```bash
+claude plugin install cuanto-falta@flota
+```
+
+Desde la app: en **Customize → Plugins**, dentro del marketplace **flota**, agrega el plugin
+**cuanto-falta**. Detalle completo en [`cuanto-falta/README.md`](cuanto-falta/README.md).
+
 ## Qué ejecuta y qué modifica en tu equipo
 
 Todo es código legible que puedes revisar en este repo. Nada se envía al autor.
@@ -118,6 +150,16 @@ Todo es código legible que puedes revisar en este repo. Nada se envía al autor
     encontrar datos personales que estén en tu código, y tampoco los guarda.
   - Escribe el informe en `docs/auditorias/` de tu proyecto y un registro en `~/.claude/flota/`.
     No hace commit, push ni deploy.
+
+- **cuanto-falta (si lo instalas):**
+  - Mira los eventos de tu propia sesión (qué herramienta usa cada subagente, para saber su fase),
+    la lista de agentes y el uso de la sesión. Lo guarda en memoria de la sesión.
+  - Escribe en `~/.claude/cuanto-falta/` dos archivos por sesión: lo que corre ahora y la medición de
+    cada agente terminado. Solo rol, modelo, tiempos, fases y cifras: nunca descripciones, prompts ni
+    títulos de pasos.
+  - Avisa al terminar una tarea larga. No bloquea ni cambia nada, y no se conecta a internet.
+  - Sus tablas se regeneran solo si tú corres `node herramientas/tablas.mjs` en su carpeta: lee tus
+    transcripts de `~/.claude/projects/` y escribe solo números y nombres de rol y modelo.
 
 ### Servicios externos que contacta
 
